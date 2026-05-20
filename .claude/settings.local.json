@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(php -l:*)",
+      "Bash(php artisan tinker:*)",
+      "Bash(php artisan:*)",
+      "Bash(php -r \"echo count\\(require ''C:\\\\laragon\\\\www\\\\laravel12-loan-management-system\\\\resources\\\\lang\\\\en\\\\common.php''\\);\")",
+      "Bash(mkdir:*)",
+      "Bash(php translate_common.php:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(php -r \"echo count\\(require ''C:\\\\laragon\\\\www\\\\laravel12-loan-management-system\\\\resources\\\\lang\\\\kh\\\\common.php''\\);\")",
+      "Bash(php -r \"echo count\\(require ''C:\\\\laragon\\\\www\\\\laravel12-loan-management-system\\\\resources\\\\lang\\\\zh\\\\common.php''\\);\")",
+      "Bash(php:*)"
+    ]
+  }
+}

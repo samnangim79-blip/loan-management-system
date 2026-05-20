@@ -1,0 +1,23 @@
+{
+  "sEmptyTable": "មិនមានទិន្នន័យក្នុងតារាង",
+  "sInfo": "បង្ហាញពី _START_ ដល់ _END_ នៃ _TOTAL_ ធាតុ",
+  "sInfoEmpty": "បង្ហាញពី 0 ដល់ 0 នៃ 0 ធាតុ",
+  "sInfoFiltered": "(បានតម្រងពី _MAX_ ធាតុសរុប)",
+  "sInfoPostFix": "",
+  "sInfoThousands": ",",
+  "sLengthMenu": "បង្ហាញ _MENU_ ធាតុ",
+  "sLoadingRecords": "កំពុងផ្ទុក...",
+  "sProcessing": "កំពុងដំណើរការ...",
+  "sSearch": "ស្វែងរក:",
+  "sZeroRecords": "រកមិនឃើញកំណត់ត្រាដែលត្រូវគ្នា",
+  "oPaginate": {
+    "sFirst": "ដំបូង",
+    "sLast": "ចុងក្រោយ",
+    "sNext": "បន្ទាប់",
+    "sPrevious": "មុន"
+  },
+  "oAria": {
+    "sSortAscending": ": ធ្វើឲ្យសកម្មដើម្បីតម្រៀបជួរឈរឡើង",
+    "sSortDescending": ": ធ្វើឲ្យសកម្មដើម្បីតម្រៀបជួរឈរចុះ"
+  }
+}

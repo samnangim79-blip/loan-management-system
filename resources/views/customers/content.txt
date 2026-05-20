@@ -1,0 +1,497 @@
+    <!-- Basic Information Section -->
+    <div class="card mb-3">
+        <div class="card-header bg-primary text-white">
+        <h6 class="mb-0">{{ __('common.customer_management.basic_information') }}</h6>
+        </div>
+        <div class="card-body">
+        <div class="row">
+            <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-3">
+                <div class="mb-3">
+                    <label for="ic_no" class="form-label">{{ __('common.customer_management.ic_number') }} <span
+                        class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="ic_no" name="ic_no" maxlength="30"
+                    required>
+                </div>
+                </div>
+                <div class="col-md-3">
+                <div class="mb-3">
+                    <label for="id_no"
+                    class="form-label">{{ __('common.customer_management.id_number') }}</label>
+                    <input type="text" class="form-control" id="id_no" name="id_no" maxlength="30">
+                </div>
+                </div>
+                <div class="col-md-3">
+                <div class="mb-3">
+                    <label for="name_en" class="form-label">{{ __('common.customer_management.name_english') }}
+                    <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="name_en" name="name_en" maxlength="50"
+                    required>
+                </div>
+                </div>
+                <div class="col-md-3">
+                <div class="mb-3">
+                    <label for="name_kh"
+                    class="form-label">{{ __('common.customer_management.name_khmer') }}</label>
+                    <input type="text" class="form-control" id="name_kh" name="name_kh" maxlength="50">
+                </div>
+                </div>
+            </div>
+            </div>
+            <div class="col-md-3">
+
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Personal Details Section -->
+    <div class="card mb-3">
+        <div class="card-header bg-primary text-white">
+        <h6 class="mb-0">{{ __('common.customer_management.personal_details') }}</h6>
+        </div>
+        <div class="card-body">
+        <div class="row">
+            <div class="col-md-3">
+            <div class="mb-3">
+                <label for="gender" class="form-label">{{ __('common.customer_management.gender') }} <span
+                    class="text-danger">*</span></label>
+                <select class="form-select" id="gender" name="gender" required>
+                <option value="">{{ __('common.customer_management.select_gender') }}</option>
+                <option value="M">{{ __('common.customer_management.male') }}</option>
+                <option value="F">{{ __('common.customer_management.female') }}</option>
+                </select>
+            </div>
+            </div>
+            <div class="col-md-3">
+            <div class="mb-3">
+                <label for="marital_status"
+                class="form-label">{{ __('common.customer_management.marital_status') }} <span
+                    class="text-danger">*</span></label>
+                <select class="form-select" id="marital_status" name="marital_status" required>
+                <option value="">{{ __('common.customer_management.select_status') }}</option>
+                <option value="0">{{ __('common.customer_management.single') }}</option>
+                <option value="1">{{ __('common.customer_management.married') }}</option>
+                </select>
+            </div>
+            </div>
+            <div class="col-md-3">
+            <div class="mb-3">
+                <label for="dob" class="form-label">{{ __('common.customer_management.date_of_birth') }}
+                <span class="text-danger">*</span></label>
+                <input type="date" class="form-control" id="dob" name="dob" required>
+            </div>
+            </div>
+            <div class="col-md-3">
+            <div class="mb-3">
+                <label for="pob"
+                class="form-label">{{ __('common.customer_management.place_of_birth') }}</label>
+                <input type="text" class="form-control" id="pob" name="pob" maxlength="100">
+            </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+            <div class="mb-3">
+                <label for="nationality_id"
+                class="form-label">{{ __('common.customer_management.nationality') }}</label>
+                <select id="nationality_id" name="nationality_id" class="form-select"
+                placeholder="{{ __('common.customer_management.select_nationality') }}"></select>
+            </div>
+            </div>
+            <div class="col-md-4">
+            <div class="mb-3">
+                <label for="occupation"
+                class="form-label">{{ __('common.customer_management.occupation') }}</label>
+                <input type="text" class="form-control" id="occupation" name="occupation" maxlength="50">
+            </div>
+            </div>
+            <div class="col-md-4">
+            <div class="mb-3">
+                <label for="email" class="form-label">{{ __('common.customer_management.email') }}</label>
+                <input type="email" class="form-control" id="email" name="email" maxlength="50">
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Contact Information Section -->
+    <div class="card mb-3">
+        <div class="card-header bg-primary text-white">
+        <h6 class="mb-0">{{ __('common.customer_management.contact_information') }}</h6>
+        </div>
+        <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+            <div class="mb-3">
+                <label for="phone1" class="form-label">{{ __('common.customer_management.phone1') }} <span
+                    class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="phone1" name="phone1" maxlength="50"
+                required>
+            </div>
+            </div>
+            <div class="col-md-4">
+            <div class="mb-3">
+                <label for="phone2" class="form-label">{{ __('common.customer_management.phone2') }}</label>
+                <input type="text" class="form-control" id="phone2" name="phone2" maxlength="50">
+            </div>
+            </div>
+            <div class="col-md-4">
+            <div class="mb-3">
+                <label for="phone3" class="form-label">{{ __('common.customer_management.phone3') }}</label>
+                <input type="text" class="form-control" id="phone3" name="phone3" maxlength="50">
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Address Information Section -->
+    <div class="card mb-3">
+        <div class="card-header bg-primary text-white">
+        <h6 class="mb-0">{{ __('common.customer_management.address_information') }}</h6>
+        </div>
+        <div class="card-body">
+        <div class="row">
+            <div class="col-md-8">
+            <div class="mb-3">
+                <label for="address" class="form-label">{{ __('common.customer_management.address') }} <span
+                    class="text-danger">*</span></label>
+                <textarea class="form-control" id="address" name="address" rows="3" maxlength="100" required></textarea>
+            </div>
+            </div>
+            <div class="col-md-4">
+            <div class="mb-3">
+                <label for="village_id" class="form-label">{{ __('common.customer_management.village') }} <span
+                    class="text-danger">*</span></label>
+                <select id="village_id" name="village_id" class="form-select" required
+                placeholder="{{ __('common.customer_management.search_village') }}"></select>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Spouse Information Section (conditionally displayed) -->
+    <div class="card mb-3" id="spouseSection" style="display: none;">
+        <div class="card-header bg-info text-white">
+        <h6 class="mb-0">{{ __('common.customer_management.spouse_information') }}</h6>
+        </div>
+        <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+            <div class="mb-3">
+                <label for="spouse_en"
+                class="form-label">{{ __('common.customer_management.spouse_name_english') }}</label>
+                <input type="text" class="form-control" id="spouse_en" name="spouse_en" maxlength="50">
+            </div>
+            </div>
+            <div class="col-md-4">
+            <div class="mb-3">
+                <label for="spouse_kh"
+                class="form-label">{{ __('common.customer_management.spouse_name_khmer') }}</label>
+                <input type="text" class="form-control" id="spouse_kh" name="spouse_kh" maxlength="50">
+            </div>
+            </div>
+            <div class="col-md-4">
+            <div class="mb-3">
+                <label for="spouse_dob"
+                class="form-label">{{ __('common.customer_management.spouse_dob') }}</label>
+                <input type="date" class="form-control" id="spouse_dob" name="spouse_dob">
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Staff Assignment Section -->
+    <div class="card mb-3">
+        <div class="card-header bg-primary text-white">
+        <h6 class="mb-0">{{ __('common.customer_management.staff_assignment') }}</h6>
+        </div>
+        <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+            <div class="mb-3">
+                <label for="staff_id"
+                class="form-label">{{ __('common.customer_management.assigned_staff') }}</label>
+                <select id="staff_id" name="staff_id" class="form-select"
+                placeholder="{{ __('common.customer_management.select_staff') }}"></select>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Remarks Section -->
+    <div class="card mb-3">
+        <div class="card-header bg-primary text-white">
+        <h6 class="mb-0">{{ __('common.customer_management.remarks') }}</h6>
+        </div>
+        <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+            <div class="mb-3">
+                <label for="remark" class="form-label">{{ __('common.customer_management.remark') }}</label>
+                <textarea class="form-control" id="remark" name="remark" rows="3"></textarea>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+
+
+// Initialize Flatpickr for date fields
+flatpickr("#dob", {
+dateFormat: "Y-m-d",
+maxDate: "today"
+});
+
+// Initialize Tom Select for dropdowns
+var villageSelect = new TomSelect('#village_id', {
+valueField: 'id',
+labelField: 'name_en',
+searchField: ['name_en', 'name_kh'],
+load: function(query, callback) {
+    if (!query.length) return callback();
+    $.ajax({
+    url: '/api/villages/search',
+    type: 'get',
+    data: {
+        q: query
+    },
+    success: function(res) {
+        callback(res);
+    }
+    });
+},
+render: {
+    option: function(item, escape) {
+    return '<div>' + escape(item.name_en) + ' - ' + escape(item.name_kh) + '</div>';
+    }
+}
+});
+
+var nationalitySelect = new TomSelect('#nationality_id', {
+valueField: 'nationality_id',
+labelField: 'nationality',
+searchField: ['nationality', 'nationality_kh'],
+preload: true,
+load: function(query, callback) {
+    $.ajax({
+    url: '/api/nationalities',
+    type: 'get',
+    success: function(res) {
+        callback(res);
+    }
+    });
+}
+});
+
+var staffSelect = new TomSelect('#staff_id', {
+valueField: 'staff_id',
+labelField: 'staff_name',
+searchField: ['staff_name'],
+preload: true,
+load: function(query, callback) {
+    $.ajax({
+    url: '/api/staff',
+    type: 'get',
+    success: function(res) {
+        callback(res);
+    }
+    });
+}
+});
+
+// Add Customer Button
+$('#addCustomerBtn').click(function() {
+$('#customerForm')[0].reset();
+villageSelect.clear();
+nationalitySelect.clear();
+staffSelect.clear();
+$('#cust_id').val('');
+$('#modalTitle').text(translations.addCustomer);
+$('#customerModal').modal('show');
+});
+
+// Form Submit
+$('#customerForm').on('submit', function(e) {
+e.preventDefault();
+
+var formData = $(this).serialize();
+var customerId = $('#cust_id').val();
+var url = customerId ? `/customers/${customerId}` : '/customers';
+var method = customerId ? 'PUT' : 'POST';
+
+$.ajax({
+    url: url,
+    type: method,
+    data: formData,
+    headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function(response) {
+    if (response.success) {
+        $('#customerModal').modal('hide');
+        toastr.success(response.message || translations.operationCompleted);
+        table.ajax.reload();
+    }
+    },
+    error: function(xhr) {
+    if (xhr.responseJSON) {
+        if (xhr.responseJSON.errors) {
+        $.each(xhr.responseJSON.errors, function(key, value) {
+            toastr.error(value[0]);
+        });
+        } else if (xhr.responseJSON.message) {
+        toastr.error(xhr.responseJSON.message);
+        } else {
+        toastr.error(translations.errorOccurred);
+        }
+    } else {
+        toastr.error(translations.errorOccurred);
+    }
+    }
+});
+});
+
+// Edit Button
+$(document).on('click', '.edit-btn', function() {
+var customerId = $(this).data('id');
+
+$.ajax({
+    url: `/api/customers/${customerId}`,
+    type: 'GET',
+    dataType: 'json',
+    success: function(customer) {
+    console.log('Customer data:', customer);
+
+    // Set form title first
+    $('#modalTitle').text(translations.editCustomer);
+
+    // Set all basic fields
+    $('#cust_id').val(customer.cust_id || '');
+    $('#ic_no').val(customer.ic_no || '');
+    $('#id_no').val(customer.id_no || '');
+    $('#name_en').val(customer.name_en || '');
+    $('#name_kh').val(customer.name_kh || '');
+    $('#gender').val(customer.gender || '');
+    $('#marital_status').val(customer.marital_status !== null && customer.marital_status !==
+        undefined ? customer.marital_status : '');
+    // Ensure marital status is properly selected
+    setTimeout(function() {
+        $('#marital_status').val(customer.marital_status !== null && customer.marital_status !==
+        undefined ? customer.marital_status : '');
+    }, 50);
+    $('#dob').val(customer.dob || '');
+    $('#phone1').val(customer.phone1 || '');
+    $('#phone2').val(customer.phone2 || '');
+    $('#phone3').val(customer.phone3 || '');
+    $('#email').val(customer.email || '');
+    $('#pob').val(customer.pob || '');
+    $('#occupation').val(customer.occupation || '');
+    $('#address').val(customer.address || '');
+    $('#remark').val(customer.remark || '');
+
+    // Spouse fields
+    $('#spouse_en').val(customer.spouse_en || '');
+    $('#spouse_kh').val(customer.spouse_kh || '');
+    $('#spouse_dob').val(customer.spouse_dob || '');
+
+    // Clear and set village dropdown
+    villageSelect.clear();
+    villageSelect.clearOptions();
+    if (customer.village_id && customer.village) {
+        villageSelect.addOption({
+        id: customer.village_id,
+        name_en: customer.village.name_en,
+        name_kh: customer.village.name_kh
+        });
+        setTimeout(function() {
+        villageSelect.setValue(customer.village_id);
+        }, 100);
+    }
+
+    // Clear and set nationality dropdown
+    nationalitySelect.clear();
+    if (customer.nationality_id) {
+        setTimeout(function() {
+        nationalitySelect.setValue(customer.nationality_id);
+        }, 100);
+    }
+
+    // Clear and set staff dropdown
+    staffSelect.clear();
+    if (customer.staff_id) {
+        setTimeout(function() {
+        staffSelect.setValue(customer.staff_id);
+        }, 100);
+    }
+
+    // Show modal after all data is set
+    $('#customerModal').modal('show');
+    },
+    error: function(xhr, status, error) {
+    console.error('Error loading customer:', xhr);
+    console.error('Status:', status);
+    console.error('Error:', error);
+    console.error('Response:', xhr.responseText);
+    console.error('Status Code:', xhr.status);
+    toastr.error(translations.failedLoadCustomer + ': ' + (xhr.status || translations
+        .unknownError));
+    }
+});
+});
+
+// Delete Button
+$(document).on('click', '.delete-btn', function() {
+var customerId = $(this).data('id');
+
+Swal.fire({
+    title: translations.areYouSure,
+    text: translations.cannotRevert,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: translations.yesDelete
+}).then((result) => {
+    if (result.isConfirmed) {
+    $.ajax({
+        url: `/customers/${customerId}`,
+        type: 'DELETE',
+        headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(response) {
+        if (response.success) {
+            table.ajax.reload();
+            Swal.fire(
+            translations.deleted,
+            response.message,
+            'success'
+            );
+        }
+        },
+        error: function(xhr) {
+        Swal.fire(
+            translations.error,
+            xhr.responseJSON.message,
+            'error'
+        );
+        }
+    });
+    }
+});
+});
+
+// View Button
+$(document).on('click', '.view-btn', function() {
+var customerId = $(this).data('id');
+window.location.href = `/customers/${customerId}/show`;
+});

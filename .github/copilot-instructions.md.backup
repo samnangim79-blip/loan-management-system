@@ -1,0 +1,142 @@
+# Loan Management System - AI Coding Guidelines
+
+## Project Overview
+
+Laravel 12 Loan Management System for microfinance operations. Built with Bootstrap 5, jQuery/AJAX, and Yajra DataTables. Supports multi-language (English/Khmer/Chinese). Uses Laravel Socialite for authentication (Telegram integration). Key dependencies: Yajra DataTables, SweetAlert2, Flatpickr, Tom Select.
+
+## Architecture
+
+### Core Domain Models (app/Models/)
+
+The system follows a **mixed naming convention** with both snake_case and UPPERCASE column names:
+
+```
+Customer → AccountInfo → LoanSchedule → LoanTran
+              ↓              ↓
+         CustAcctTran    Collateral
+```
+
+-   **Customer** (`customer_infos`): Primary key `cust_id`, dual-language names (`name_en`, `name_kh`)
+-   **AccountInfo** (`account_infos`): Primary key `acct_id`, status constants defined as class constants
+-   **LoanSchedule** (`loan_schedules`): Primary key `loan_schedule_id`, tracks loan lifecycle
+-   **Trans** (`trans`): Central transaction log with type constants (deposit, withdrawal, loan payment)
+
+### Model Conventions
+
+-   All models use `public $timestamps = false` - use `created_date`/`modify_date` manually
+-   Primary keys are explicit: `protected $primaryKey = 'cust_id'`
+-   Table names are explicit: `protected $table = 'customer_infos'`
+-   Use class constants for status/type values (e.g., `AccountInfo::STATUS_ACTIVE`)
+-   Foreign keys match actual column names exactly in relationships
+
+### Location Hierarchy
+
+Geographic data follows: `Country → Province → District → Commune → Village`
+
+### GL (General Ledger) Structure
+
+Four-level chart of accounts: `GlL1 → GlL2 → GlL3 → GlL4 → Gl`
+
+## Development Workflow
+
+### Quick Start
+
+```bash
+composer setup   # Full install: deps, .env, key, migrations, npm
+composer dev     # Runs: server, queue, logs, vite concurrently
+composer test    # Clear config + run tests
+```
+
+### Frontend Stack
+
+-   **DataTables**: Server-side via Yajra - controllers return `DataTables::of($query)` with `getData()` methods
+-   **Modals**: Use SweetAlert2 for confirmations, Toastr for notifications
+-   **Forms**: Flatpickr for dates, Tom Select for searchable dropdowns
+-   **AJAX pattern**: All CRUD returns JSON `{ success: true, message: '...', data: {...} }`
+-   **UI Components**: Bootstrap 5, FontAwesome 7.1, jQuery 3.7
+-   **Build**: Vite with Tailwind 4.0, assets in `public/assets/`
+
+## Code Patterns
+
+### Controller Pattern (see CustomerController, LocationController)
+
+```php
+// Index returns view, getData() handles DataTable AJAX
+public function index() { return view('customers.index'); }
+
+public function getData() {
+    return DataTables::of(Customer::with('village'))
+        ->addColumn('action', fn($row) => '...')
+        ->rawColumns(['action'])
+        ->make(true);
+}
+
+// Store/Update return JSON
+public function store(Request $request) {
+    $validated = $request->validate([...]);
+    $validated['created_by'] = auth()->id() ?? 1;
+    $validated['created_date'] = now();
+    return response()->json(['success' => true, 'data' => $model]);
+}
+```
+
+### Route Structure
+
+```php
+Route::prefix('customers')->group(function () {
+    Route::get('/data', [..., 'getData']);  // DataTable endpoint
+    // Standard resource routes...
+});
+Route::prefix('api')->group(function () {  // AJAX endpoints
+    Route::get('/villages/search', ...);
+});
+```
+
+### Database Transactions
+
+```php
+DB::beginTransaction();
+try {
+    // operations...
+    DB::commit();
+} catch (\Exception $e) {
+    DB::rollback();
+    return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+}
+```
+
+## Key Files Reference
+
+| Purpose             | Location                                                                         |
+| ------------------- | -------------------------------------------------------------------------------- |
+| Global helpers      | `app/Helpers/Helpers.php` (autoloaded)                                           |
+| Translation support | `app/Traits/HasTranslations.php`, `app/Services/TranslationService.php`          |
+| Permission checking | `app/Traits/HasPermissions.php`                                                  |
+| All tables schema   | `database/migrations/2024_12_07_000000_create_loan_management_system_tables.php` |
+| Admin layout        | `resources/views/admin/layouts/`                                                 |
+
+## Localization
+
+-   Dual-language fields: `name_en`/`name_kh`, `province`/`province_kh`
+-   Available locales: `en`, `kh` (Khmer), `zh` (Chinese)
+-   Use `TranslationHelper::getLocaleName()` for display
+-   Translation trait provides caching and morphMany relationships
+-   JS translations via `js_translations()` helper for frontend
+-   Auto-loaded language helpers in composer.json files array
+
+## Access Control
+
+-   **AccessProfile**: Role-based limits (`deposit_limit`, `loan_limit`)
+-   **AccessProfileDetail**: Links profiles to modules
+-   Check: `$profile->hasModule('module_control_name')`
+
+## Important Notes
+
+1. **No Eloquent timestamps** - Always set `created_date`, `modify_date` manually
+2. **Decimal precision** - Use `decimal(20,5)` for monetary amounts, `decimal:2` for rates
+3. **Foreign keys** - Explicitly defined in relationships, match column names exactly
+4. **Date casting** - All date columns cast in `$casts` array
+5. **Auth fallback** - Controllers use `auth()->id() ?? 1` for development
+6. **Table structure** - Single migration file contains all tables for the entire system
+7. **Auto-loaded helpers** - `Helpers.php` and `LanguageHelpers.php` globally available
+8. **Translation caching** - HasTranslations trait auto-clears cache on model changes

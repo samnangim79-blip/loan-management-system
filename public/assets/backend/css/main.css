@@ -1,0 +1,398 @@
+body {
+  overflow: hidden;
+  font-family: 'Poppins', 'Kantumruy Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* =========================================
+   SIDEBAR STYLES
+   ========================================= */
+.pt-sidebar {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  transition: width 0.3s ease-in-out;
+  position: relative;
+  z-index: 40;
+  width: 250px;
+  box-shadow: 2px 0 20px rgba(102, 126, 234, 0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+/* =========================================
+   FLOATING TOGGLE BUTTON STYLE
+   ========================================= */
+.pt-toggle-btn-wrapper {
+  position: absolute;
+  right: -12px;
+  top: 15px;
+  z-index: 50;
+}
+
+.pt-sidebar-toggle-btn {
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, #764ba2 0%, #5f78e6 100%);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  font-size: 10px;
+  box-shadow: 0 2px 12px rgba(118, 75, 162, 0.4);
+  transition: all 0.3s ease;
+}
+
+.pt-sidebar-toggle-btn:hover {
+  background: linear-gradient(135deg, #3a5bf0 0%, #b880f0 100%);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(118, 75, 162, 0.6);
+  transform: scale(1.1);
+}
+
+/* Rotate arrow when collapsed */
+.pt-sidebar.collapsed .pt-sidebar-toggle-btn i {
+  transform: rotate(180deg);
+}
+
+/* =========================================
+   LOGO CONTAINER
+   ========================================= */
+.pt-logo-container {
+  height: 50px;
+}
+
+/* =========================================
+   ACCORDION MENU STYLES
+   ========================================= */
+.pt-accordionmenu li>a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.pt-accordionmenu li>a:hover,
+.pt-accordionmenu li.pt-active>a {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border-left-color: #ffffff;
+  backdrop-filter: blur(10px);
+}
+
+/* Menu Icon Styles */
+.pt-menu-icon {
+  width: 20px;
+  margin-right: 12px;
+  font-size: 16px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* Chevron Icon Positioning */
+.pt-has-arrow .pt-chevron-icon {
+  position: absolute;
+  right: 20px;
+  transition: transform 0.3s ease;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.pt-accordionmenu .pt-mm-active>.pt-has-arrow .pt-chevron-icon {
+  transform: rotate(180deg);
+}
+
+/* Hide default arrow */
+.pt-accordionmenu .pt-has-arrow::after {
+  display: none;
+}
+
+/* Beautiful sidebar menu styles */
+.pt-sidebar .pt-accordionmenu li>a {
+  color: rgba(255, 255, 255, 0.85);
+  border-left-color: transparent;
+}
+
+.pt-sidebar .pt-accordionmenu li>a:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border-left-color: #ffffff;
+  backdrop-filter: blur(10px);
+}
+
+.pt-sidebar .pt-accordionmenu li.pt-active>a {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border-left-color: #ffffff;
+  font-weight: 500;
+}
+
+.pt-sidebar .pt-accordionmenu ul {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.pt-sidebar .pt-accordionmenu ul a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.pt-sidebar .pt-accordionmenu ul a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.pt-sidebar .pt-logo-text {
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pt-sidebar .pt-chevron-icon {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* =========================================
+   COLLAPSED SIDEBAR STATE
+   ========================================= */
+.pt-sidebar.pt-collapsed {
+  width: 4rem;
+}
+
+/* Hide text when collapsed */
+.pt-sidebar.pt-collapsed .pt-sidebar-text,
+.pt-sidebar.pt-collapsed .pt-chevron-icon,
+.pt-sidebar.pt-collapsed .pt-logo-text {
+  opacity: 0;
+  display: none;
+}
+
+/* Center icons when collapsed */
+.pt-sidebar.pt-collapsed .pt-accordionmenu li>a {
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.pt-sidebar.pt-collapsed .pt-menu-icon {
+  margin-right: 0;
+  font-size: 1.2rem;
+}
+
+/* Hide submenus in collapsed mode */
+.pt-sidebar.pt-collapsed ul ul {
+  display: none !important;
+}
+
+/* Adjust Logo container in collapsed mode */
+.pt-sidebar.pt-collapsed .pt-logo-container {
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* =========================================
+   LAYOUT WRAPPER STYLES
+   ========================================= */
+.pt-main-wrapper {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.pt-content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.pt-main-content {
+  flex: 1;
+  overflow-y: auto;
+  background: #f8f9fa;
+}
+
+/* Header styling */
+/* .top-header {
+        height: 64px;
+        background: #fff;
+        border-bottom: 1px solid #e9ecef;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+      } */
+
+/* =========================================
+   STAT CARDS
+   ========================================= */
+.pt-stat-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pt-stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+}
+
+.pt-stat-card-blue {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.pt-stat-card-pink {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.pt-stat-card-orange {
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+}
+
+.pt-stat-card-green {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+/* Badge styles for stat cards */
+.pt-stat-badge {
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+/* Slide-in animation */
+@keyframes pt-slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pt-animate-slide-in {
+  animation: pt-slideIn 0.5s ease-out forwards;
+}
+
+/* Custom dropdown animations */
+@keyframes slideInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Animate custom dropdowns */
+#lang-menu:not(.d-none),
+#profile-menu:not(.d-none) {
+  animation: slideInUp 0.5s ease-out;
+}
+
+/* Custom dropdown hover effects */
+.pt-hover-bg-light:hover {
+  background-color: #f8f9fa !important;
+  color: #0d6efd !important;
+}
+
+.pt-hover-bg-danger-light:hover {
+  background-color: #fff5f5 !important;
+}
+
+/* Status badges */
+.pt-badge-pending {
+  background: #cfe2ff;
+  color: #084298;
+}
+
+.pt-badge-completed {
+  background: #d1e7dd;
+  color: #0a3622;
+}
+
+/* Responsive sidebar */
+@media (max-width: 768px) {
+  .pt-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    z-index: 1050;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .pt-sidebar.pt-show {
+    transform: translateX(0);
+  }
+
+  .pt-mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1040;
+  }
+
+  .pt-mobile-overlay.pt-show {
+    display: block;
+  }
+}
+
+/* Table styling */
+.table thead th {
+  border-bottom: 2px solid #dee2e6;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  color: #6c757d;
+}
+
+.table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+/* Accordion menu submenu styling */
+.pt-accordionmenu ul {
+  background: #16192c;
+  margin: 0;
+  padding: 0;
+}
+
+.pt-accordionmenu ul li {
+  list-style: none;
+  margin: 0;
+}
+
+.pt-accordionmenu ul a {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px 12px 50px;
+  font-size: 14px;
+  color: #8391a2;
+  border-left: 3px solid transparent;
+  transition: all 0.3s ease;
+  margin: 0;
+}
+
+.pt-accordionmenu ul a:hover,
+.pt-accordionmenu ul a.pt-active {
+  color: #ffffff;
+  background: #262945;
+  border-left: 3px solid #5b7cfd;
+}
