@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Accessprofile;
-use App\Models\AccessprofileDetail;
+use App\Models\AccessProfile;
+use App\Models\AccessProfileDetail;
 use App\Models\Module;
 use App\Models\User;
 use App\Models\UserLogin;
@@ -199,7 +199,7 @@ class UserRolePermissionSeeder extends Seeder
             );
         }
 
-        $this->command->info('Seeded ' . count($modules) . ' modules (permissions)');
+        $this->command->info('Seeded '.count($modules).' modules (permissions)');
     }
 
     /**
@@ -564,25 +564,25 @@ class UserRolePermissionSeeder extends Seeder
             $moduleIds = $profileData['modules'];
             unset($profileData['modules']);
 
-            $profile = Accessprofile::updateOrCreate(
+            $profile = AccessProfile::updateOrCreate(
                 ['profile_id' => $profileData['profile_id']],
                 $profileData
             );
 
             // Clear existing profile details
-            AccessprofileDetail::where('profile_id', $profile->profile_id)->delete();
+            AccessProfileDetail::where('profile_id', $profile->profile_id)->delete();
 
             // Add new profile details
             $modules = ($moduleIds === 'all') ? $allModuleIds : $moduleIds;
             foreach ($modules as $moduleId) {
-                AccessprofileDetail::create([
+                AccessProfileDetail::create([
                     'profile_id' => $profile->profile_id,
                     'module_id' => $moduleId,
                 ]);
             }
         }
 
-        $this->command->info('Seeded ' . count($profiles) . ' access profiles (roles)');
+        $this->command->info('Seeded '.count($profiles).' access profiles (roles)');
     }
 
     /**
@@ -786,6 +786,6 @@ class UserRolePermissionSeeder extends Seeder
             );
         }
 
-        $this->command->info('Seeded ' . count($users) . ' Laravel users and ' . count($userLogins) . ' UserLogin entries');
+        $this->command->info('Seeded '.count($users).' Laravel users and '.count($userLogins).' UserLogin entries');
     }
 }

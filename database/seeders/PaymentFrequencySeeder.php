@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class PaymentFrequencySeeder extends Seeder
 {
@@ -13,7 +14,7 @@ class PaymentFrequencySeeder extends Seeder
     public function run(): void
     {
         // Disable foreign key checks
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Schema::disableForeignKeyConstraints();
 
         // Clear existing data
         DB::table('payment_frequencys')->truncate();
@@ -35,7 +36,7 @@ class PaymentFrequencySeeder extends Seeder
         DB::table('payment_frequencys')->insert($frequencies);
 
         // Re-enable foreign key checks
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        Schema::enableForeignKeyConstraints();
 
         $this->command->info('Payment frequencies seeded successfully.');
     }
