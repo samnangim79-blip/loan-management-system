@@ -67,7 +67,7 @@
                   <select class="form-select" id="fa_type_id" name="fa_type_id" required>
                     <option value="">Select Asset Type</option>
                     @foreach ($assetTypes as $type)
-                      <option value="{{ $type->FA_TYPE_ID }}">{{ $type->FA_TYPE }}</option>
+                      <option value="{{ $type->fa_type_id }}">{{ $type->fa_type }}</option>
                     @endforeach
                   </select>
                 </div>
@@ -104,7 +104,7 @@
                   <select class="form-select" id="ccy_id" name="ccy_id" required>
                     <option value="">Select Currency</option>
                     @foreach ($currencies as $currency)
-                      <option value="{{ $currency->CCY_ID }}">{{ $currency->CURRENCY }}</option>
+                      <option value="{{ $currency->ccy_id }}">{{ $currency->currency }}</option>
                     @endforeach
                   </select>
                 </div>

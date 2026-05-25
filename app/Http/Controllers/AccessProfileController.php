@@ -23,16 +23,16 @@ class AccessProfileController extends Controller
 
     return DataTables::of($profiles)
       ->addColumn('limits', function ($row) {
-        return 'D: $' . number_format($row->DEPOSIT_LIMIT ?? 0, 2) .
-          ' | W: $' . number_format($row->WITHDRAWAL_LIMIT ?? 0, 2) .
-          ' | L: $' . number_format($row->LOAN_LIMIT ?? 0, 2);
+        return 'D: $' . number_format($row->deposit_limit ?? 0, 2) .
+          ' | W: $' . number_format($row->withdrawal_limit ?? 0, 2) .
+          ' | L: $' . number_format($row->loan_limit ?? 0, 2);
       })
       ->addColumn('action', function ($row) {
         $btn = '<div class="btn-group" role="group">';
-        $btn .= '<button type="button" class="btn btn-sm btn-info view-btn" data-id="' . $row->PROFILE_ID . '"><i class="fas fa-eye"></i></button>';
-        $btn .= '<button type="button" class="btn btn-sm btn-primary edit-btn" data-id="' . $row->PROFILE_ID . '"><i class="fas fa-edit"></i></button>';
-        $btn .= '<button type="button" class="btn btn-sm btn-success permissions-btn" data-id="' . $row->PROFILE_ID . '"><i class="fas fa-shield-alt"></i></button>';
-        $btn .= '<button type="button" class="btn btn-sm btn-danger delete-btn" data-id="' . $row->PROFILE_ID . '"><i class="fas fa-trash"></i></button>';
+        $btn .= '<button type="button" class="btn btn-sm btn-info view-btn" data-id="' . $row->profile_id . '"><i class="fas fa-eye"></i></button>';
+        $btn .= '<button type="button" class="btn btn-sm btn-primary edit-btn" data-id="' . $row->profile_id . '"><i class="fas fa-edit"></i></button>';
+        $btn .= '<button type="button" class="btn btn-sm btn-success permissions-btn" data-id="' . $row->profile_id . '"><i class="fas fa-shield-alt"></i></button>';
+        $btn .= '<button type="button" class="btn btn-sm btn-danger delete-btn" data-id="' . $row->profile_id . '"><i class="fas fa-trash"></i></button>';
         $btn .= '</div>';
         return $btn;
       })
@@ -132,7 +132,7 @@ class AccessProfileController extends Controller
   {
     $validated = $request->validate([
       'modules' => 'array',
-      'modules.*' => 'exists:modules,MODULE_ID'
+      'modules.*' => 'exists:modules,module_id'
     ]);
 
     $profile = AccessProfile::findOrFail($id);

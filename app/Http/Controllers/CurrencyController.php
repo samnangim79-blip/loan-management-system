@@ -20,13 +20,13 @@ class CurrencyController extends Controller
 
     return DataTables::of($currencies)
       ->addColumn('formatted_rate', function ($row) {
-        return number_format($row->CCY_RATE, 5);
+        return number_format($row->ccy_rate, 5);
       })
       ->addColumn('action', function ($row) {
         $btn = '<div class="btn-group" role="group">';
-        $btn .= '<button type="button" class="btn btn-sm btn-info view-btn" data-id="' . $row->CCY_ID . '"><i class="fas fa-eye"></i></button>';
-        $btn .= '<button type="button" class="btn btn-sm btn-primary edit-btn" data-id="' . $row->CCY_ID . '"><i class="fas fa-edit"></i></button>';
-        $btn .= '<button type="button" class="btn btn-sm btn-warning history-btn" data-id="' . $row->CCY_ID . '"><i class="fas fa-history"></i></button>';
+        $btn .= '<button type="button" class="btn btn-sm btn-info view-btn" data-id="' . $row->ccy_id . '"><i class="fas fa-eye"></i></button>';
+        $btn .= '<button type="button" class="btn btn-sm btn-primary edit-btn" data-id="' . $row->ccy_id . '"><i class="fas fa-edit"></i></button>';
+        $btn .= '<button type="button" class="btn btn-sm btn-warning history-btn" data-id="' . $row->ccy_id . '"><i class="fas fa-history"></i></button>';
         $btn .= '</div>';
         return $btn;
       })
@@ -37,7 +37,7 @@ class CurrencyController extends Controller
   public function store(Request $request)
   {
     $validated = $request->validate([
-      'currency' => 'required|string|max:4|unique:currencys,CURRENCY',
+      'currency' => 'required|string|max:4|unique:currencys,currency',
       'ccy_rate' => 'required|numeric|min:0',
       'round_value' => 'nullable|integer|min:0',
       'decimal_place' => 'nullable|integer|min:0|max:5',
@@ -68,7 +68,7 @@ class CurrencyController extends Controller
     $currency = Currency::findOrFail($id);
 
     $validated = $request->validate([
-      'currency' => 'required|string|max:4|unique:currencys,CURRENCY,' . $id . ',CCY_ID',
+      'currency' => 'required|string|max:4|unique:currencys,currency,' . $id . ',ccy_id',
       'ccy_rate' => 'required|numeric|min:0',
       'round_value' => 'nullable|integer|min:0',
       'decimal_place' => 'nullable|integer|min:0|max:5',
@@ -77,9 +77,9 @@ class CurrencyController extends Controller
     ]);
 
     // Log rate change to history
-    if ($currency->CCY_RATE != $validated['ccy_rate']) {
+    if ($currency->ccy_rate != $validated['ccy_rate']) {
       ExRateHistory::create([
-        'ex_rate' => $currency->CCY_RATE,
+        'ex_rate' => $currency->ccy_rate,
         'rate_date' => now()->toDateString()
       ]);
     }

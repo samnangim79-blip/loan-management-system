@@ -169,13 +169,13 @@ class LocationController extends Controller
 
         return DataTables::of($districts)
             ->addColumn('province_name', function ($row) {
-                return $row->province ? $row->province->PROVINCE : '-';
+                return $row->province ? ($row->province->name_en ?? $row->province->name_kh) : '-';
             })
             ->addColumn('action', function ($row) {
                 $actions = '<div class="btn-group btn-group-sm">';
-                $actions .= '<button type="button" class="btn btn-info view-btn" data-id="' . $row->DISTRICT_ID . '" title="View"><i class="fas fa-eye"></i></button>';
-                $actions .= '<button type="button" class="btn btn-primary edit-btn" data-id="' . $row->DISTRICT_ID . '" title="Edit"><i class="fas fa-edit"></i></button>';
-                $actions .= '<button type="button" class="btn btn-danger delete-btn" data-id="' . $row->DISTRICT_ID . '" title="Delete"><i class="fas fa-trash"></i></button>';
+                $actions .= '<button type="button" class="btn btn-info view-btn" data-id="' . $row->id . '" title="View"><i class="fas fa-eye"></i></button>';
+                $actions .= '<button type="button" class="btn btn-primary edit-btn" data-id="' . $row->id . '" title="Edit"><i class="fas fa-edit"></i></button>';
+                $actions .= '<button type="button" class="btn btn-danger delete-btn" data-id="' . $row->id . '" title="Delete"><i class="fas fa-trash"></i></button>';
                 $actions .= '</div>';
                 return $actions;
             })
@@ -186,8 +186,8 @@ class LocationController extends Controller
     public function getDistricts($provinceId)
     {
         $districts = District::where('province_id', $provinceId)
-            ->select('district_id', 'district', 'district_kh')
-            ->orderBy('district')
+            ->select('id', 'name_en', 'name_kh')
+            ->orderBy('name_en')
             ->get();
 
         return response()->json($districts);
@@ -217,13 +217,10 @@ class LocationController extends Controller
     public function storeDistrict(Request $request)
     {
         $validated = $request->validate([
-            'district' => 'required|string|max:100',
-            'district_kh' => 'nullable|string|max:100',
-            'province_id' => 'required|integer|exists:provinces,PROVINCE_ID',
+            'name_en' => 'required|string|max:100',
+            'name_kh' => 'nullable|string|max:100',
+            'province_id' => 'required|integer|exists:provinces,id',
         ]);
-
-        $validated['created_by'] = Auth::id() ?? 1;
-        $validated['created_date'] = now();
 
         $district = District::create($validated);
 
@@ -243,13 +240,10 @@ class LocationController extends Controller
         }
 
         $validated = $request->validate([
-            'district' => 'required|string|max:100',
-            'district_kh' => 'nullable|string|max:100',
-            'province_id' => 'required|integer|exists:provinces,PROVINCE_ID',
+            'name_en' => 'required|string|max:100',
+            'name_kh' => 'nullable|string|max:100',
+            'province_id' => 'required|integer|exists:provinces,id',
         ]);
-
-        $validated['modify_by'] = Auth::id() ?? 1;
-        $validated['modify_date'] = now();
 
         $district->update($validated);
 
@@ -298,16 +292,16 @@ class LocationController extends Controller
 
         return DataTables::of($communes)
             ->addColumn('district_name', function ($row) {
-                return $row->district ? $row->district->DISTRICT : '-';
+                return $row->district ? ($row->district->name_en ?? $row->district->name_kh) : '-';
             })
             ->addColumn('province_name', function ($row) {
-                return $row->district && $row->district->province ? $row->district->province->PROVINCE : '-';
+                return $row->district && $row->district->province ? ($row->district->province->name_en ?? $row->district->province->name_kh) : '-';
             })
             ->addColumn('action', function ($row) {
                 $actions = '<div class="btn-group btn-group-sm">';
-                $actions .= '<button type="button" class="btn btn-info view-btn" data-id="' . $row->COMMUNE_ID . '" title="View"><i class="fas fa-eye"></i></button>';
-                $actions .= '<button type="button" class="btn btn-primary edit-btn" data-id="' . $row->COMMUNE_ID . '" title="Edit"><i class="fas fa-edit"></i></button>';
-                $actions .= '<button type="button" class="btn btn-danger delete-btn" data-id="' . $row->COMMUNE_ID . '" title="Delete"><i class="fas fa-trash"></i></button>';
+                $actions .= '<button type="button" class="btn btn-info view-btn" data-id="' . $row->id . '" title="View"><i class="fas fa-eye"></i></button>';
+                $actions .= '<button type="button" class="btn btn-primary edit-btn" data-id="' . $row->id . '" title="Edit"><i class="fas fa-edit"></i></button>';
+                $actions .= '<button type="button" class="btn btn-danger delete-btn" data-id="' . $row->id . '" title="Delete"><i class="fas fa-trash"></i></button>';
                 $actions .= '</div>';
                 return $actions;
             })
@@ -318,8 +312,8 @@ class LocationController extends Controller
     public function getCommunes($districtId)
     {
         $communes = Commune::where('district_id', $districtId)
-            ->select('commune_id', 'commune', 'commune_kh')
-            ->orderBy('commune')
+            ->select('id', 'name_en', 'name_kh')
+            ->orderBy('name_en')
             ->get();
 
         return response()->json($communes);
@@ -349,13 +343,10 @@ class LocationController extends Controller
     public function storeCommune(Request $request)
     {
         $validated = $request->validate([
-            'commune' => 'required|string|max:100',
-            'commune_kh' => 'nullable|string|max:100',
-            'district_id' => 'required|integer|exists:districts,DISTRICT_ID',
+            'name_en' => 'required|string|max:100',
+            'name_kh' => 'nullable|string|max:100',
+            'district_id' => 'required|integer|exists:districts,id',
         ]);
-
-        $validated['created_by'] = Auth::id() ?? 1;
-        $validated['created_date'] = now();
 
         $commune = Commune::create($validated);
 
@@ -375,13 +366,10 @@ class LocationController extends Controller
         }
 
         $validated = $request->validate([
-            'commune' => 'required|string|max:100',
-            'commune_kh' => 'nullable|string|max:100',
-            'district_id' => 'required|integer|exists:districts,DISTRICT_ID',
+            'name_en' => 'required|string|max:100',
+            'name_kh' => 'nullable|string|max:100',
+            'district_id' => 'required|integer|exists:districts,id',
         ]);
-
-        $validated['modify_by'] = Auth::id() ?? 1;
-        $validated['modify_date'] = now();
 
         $commune->update($validated);
 
@@ -430,20 +418,20 @@ class LocationController extends Controller
 
         return DataTables::of($villages)
             ->addColumn('commune_name', function ($row) {
-                return $row->commune ? $row->commune->COMMUNE : '-';
+                return $row->commune ? ($row->commune->name_en ?? $row->commune->name_kh) : '-';
             })
             ->addColumn('district_name', function ($row) {
-                return $row->commune && $row->commune->district ? $row->commune->district->DISTRICT : '-';
+                return $row->commune && $row->commune->district ? ($row->commune->district->name_en ?? $row->commune->district->name_kh) : '-';
             })
             ->addColumn('province_name', function ($row) {
                 return $row->commune && $row->commune->district && $row->commune->district->province
-                    ? $row->commune->district->province->PROVINCE : '-';
+                    ? ($row->commune->district->province->name_en ?? $row->commune->district->province->name_kh) : '-';
             })
             ->addColumn('action', function ($row) {
                 $actions = '<div class="btn-group btn-group-sm">';
-                $actions .= '<button type="button" class="btn btn-info view-btn" data-id="' . $row->VILLAGE_ID . '" title="View"><i class="fas fa-eye"></i></button>';
-                $actions .= '<button type="button" class="btn btn-primary edit-btn" data-id="' . $row->VILLAGE_ID . '" title="Edit"><i class="fas fa-edit"></i></button>';
-                $actions .= '<button type="button" class="btn btn-danger delete-btn" data-id="' . $row->VILLAGE_ID . '" title="Delete"><i class="fas fa-trash"></i></button>';
+                $actions .= '<button type="button" class="btn btn-info view-btn" data-id="' . $row->id . '" title="View"><i class="fas fa-eye"></i></button>';
+                $actions .= '<button type="button" class="btn btn-primary edit-btn" data-id="' . $row->id . '" title="Edit"><i class="fas fa-edit"></i></button>';
+                $actions .= '<button type="button" class="btn btn-danger delete-btn" data-id="' . $row->id . '" title="Delete"><i class="fas fa-trash"></i></button>';
                 $actions .= '</div>';
                 return $actions;
             })
@@ -454,8 +442,8 @@ class LocationController extends Controller
     public function getVillages($communeId)
     {
         $villages = Village::where('commune_id', $communeId)
-            ->select('village_id', 'village', 'village_kh')
-            ->orderBy('village')
+            ->select('id', 'name_en', 'name_kh')
+            ->orderBy('name_en')
             ->get();
 
         return response()->json($villages);
@@ -506,13 +494,10 @@ class LocationController extends Controller
     public function storeVillage(Request $request)
     {
         $validated = $request->validate([
-            'village' => 'required|string|max:100',
-            'village_kh' => 'nullable|string|max:100',
-            'commune_id' => 'required|integer|exists:communes,COMMUNE_ID',
+            'name_en' => 'required|string|max:100',
+            'name_kh' => 'nullable|string|max:100',
+            'commune_id' => 'required|integer|exists:communes,id',
         ]);
-
-        $validated['created_by'] = Auth::id() ?? 1;
-        $validated['created_date'] = now();
 
         $village = Village::create($validated);
 
@@ -532,13 +517,10 @@ class LocationController extends Controller
         }
 
         $validated = $request->validate([
-            'village' => 'required|string|max:100',
-            'village_kh' => 'nullable|string|max:100',
-            'commune_id' => 'required|integer|exists:communes,COMMUNE_ID',
+            'name_en' => 'required|string|max:100',
+            'name_kh' => 'nullable|string|max:100',
+            'commune_id' => 'required|integer|exists:communes,id',
         ]);
-
-        $validated['modify_by'] = Auth::id() ?? 1;
-        $validated['modify_date'] = now();
 
         $village->update($validated);
 

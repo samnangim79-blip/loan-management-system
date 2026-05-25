@@ -25,24 +25,24 @@ class FixedAssetController extends Controller
 
     return DataTables::of($assets)
       ->addColumn('type_name', function ($row) {
-        return $row->assetType->FA_TYPE ?? 'N/A';
+        return $row->assetType->fa_type ?? 'N/A';
       })
       ->addColumn('currency_code', function ($row) {
-        return $row->currency->CURRENCY ?? 'N/A';
+        return $row->currency->currency ?? 'N/A';
       })
       ->addColumn('formatted_price', function ($row) {
-        return number_format($row->PURCHASE_PRICE ?? 0, 2);
+        return number_format($row->purchase_price ?? 0, 2);
       })
       ->addColumn('formatted_net_value', function ($row) {
-        return number_format($row->NET_VALUE ?? 0, 2);
+        return number_format($row->net_value ?? 0, 2);
       })
       ->addColumn('action', function ($row) {
         $btn = '<div class="btn-group" role="group">';
-        $btn .= '<button type="button" class="btn btn-sm btn-info view-btn" data-id="' . $row->FA_ID . '"><i class="fas fa-eye"></i></button>';
-        $btn .= '<button type="button" class="btn btn-sm btn-primary edit-btn" data-id="' . $row->FA_ID . '"><i class="fas fa-edit"></i></button>';
-        $btn .= '<button type="button" class="btn btn-sm btn-warning depreciate-btn" data-id="' . $row->FA_ID . '"><i class="fas fa-chart-line"></i></button>';
-        if (!$row->DISPOSE_DATE) {
-          $btn .= '<button type="button" class="btn btn-sm btn-danger dispose-btn" data-id="' . $row->FA_ID . '"><i class="fas fa-times-circle"></i></button>';
+        $btn .= '<button type="button" class="btn btn-sm btn-info view-btn" data-id="' . $row->fa_id . '"><i class="fas fa-eye"></i></button>';
+        $btn .= '<button type="button" class="btn btn-sm btn-primary edit-btn" data-id="' . $row->fa_id . '"><i class="fas fa-edit"></i></button>';
+        $btn .= '<button type="button" class="btn btn-sm btn-warning depreciate-btn" data-id="' . $row->fa_id . '"><i class="fas fa-chart-line"></i></button>';
+        if (!$row->dispose_date) {
+          $btn .= '<button type="button" class="btn btn-sm btn-danger dispose-btn" data-id="' . $row->fa_id . '"><i class="fas fa-times-circle"></i></button>';
         }
         $btn .= '</div>';
         return $btn;
@@ -54,15 +54,15 @@ class FixedAssetController extends Controller
   public function store(Request $request)
   {
     $validated = $request->validate([
-      'fa_code' => 'required|string|max:50|unique:fixed_assets,FA_CODE',
+      'fa_code' => 'required|string|max:50|unique:fixed_assets,fa_code',
       'fa_desc' => 'required|string|max:250',
       'fa_comment' => 'nullable|string',
-      'fa_type_id' => 'required|exists:fixed_asset_types,FA_TYPE_ID',
+      'fa_type_id' => 'required|exists:fixed_asset_types,fa_type_id',
       'purchase_date' => 'required|date',
       'purchase_price' => 'required|numeric|min:0',
-      'ccy_id' => 'required|exists:currencys,CCY_ID',
+      'ccy_id' => 'required|exists:currencys,ccy_id',
       'usefull_life' => 'required|integer|min:1',
-      'credit_gl' => 'nullable|exists:gls,GL_ID'
+      'credit_gl' => 'nullable|exists:gls,gl_id'
     ]);
 
     $validated['net_value'] = $validated['purchase_price'];
@@ -89,10 +89,10 @@ class FixedAssetController extends Controller
     $asset = FixedAsset::findOrFail($id);
 
     $validated = $request->validate([
-      'fa_code' => 'required|string|max:50|unique:fixed_assets,FA_CODE,' . $id . ',FA_ID',
+      'fa_code' => 'required|string|max:50|unique:fixed_assets,fa_code,' . $id . ',fa_id',
       'fa_desc' => 'required|string|max:250',
       'fa_comment' => 'nullable|string',
-      'fa_type_id' => 'required|exists:fixed_asset_types,FA_TYPE_ID',
+      'fa_type_id' => 'required|exists:fixed_asset_types,fa_type_id',
       'usefull_life' => 'required|integer|min:1'
     ]);
 
@@ -111,7 +111,7 @@ class FixedAssetController extends Controller
 
     $validated = $request->validate([
       'depre_date' => 'required|date',
-      'amount' => 'required|numeric|min:0|max:' . $asset->NET_VALUE
+      'amount' => 'required|numeric|min:0|max:' . $asset->net_value
     ]);
 
     DB::beginTransaction();
@@ -124,7 +124,7 @@ class FixedAssetController extends Controller
       ]);
 
       // Update net value
-      $asset->NET_VALUE -= $validated['amount'];
+      $asset->net_value -= $validated['amount'];
       $asset->save();
 
       DB::commit();
@@ -186,8 +186,8 @@ class FixedAssetController extends Controller
     return DataTables::of($types)
       ->addColumn('action', function ($row) {
         $btn = '<div class="btn-group" role="group">';
-        $btn .= '<button type="button" class="btn btn-sm btn-primary edit-btn" data-id="' . $row->FA_TYPE_ID . '"><i class="fas fa-edit"></i></button>';
-        $btn .= '<button type="button" class="btn btn-sm btn-danger delete-btn" data-id="' . $row->FA_TYPE_ID . '"><i class="fas fa-trash"></i></button>';
+        $btn .= '<button type="button" class="btn btn-sm btn-primary edit-btn" data-id="' . $row->fa_type_id . '"><i class="fas fa-edit"></i></button>';
+        $btn .= '<button type="button" class="btn btn-sm btn-danger delete-btn" data-id="' . $row->fa_type_id . '"><i class="fas fa-trash"></i></button>';
         $btn .= '</div>';
         return $btn;
       })
@@ -199,10 +199,10 @@ class FixedAssetController extends Controller
   {
     $validated = $request->validate([
       'fa_type' => 'required|string|max:50',
-      'gl_id' => 'nullable|exists:gls,GL_ID',
-      'depre_gl' => 'nullable|exists:gls,GL_ID',
-      'exp_gl' => 'nullable|exists:gls,GL_ID',
-      'dispose_gl' => 'nullable|exists:gls,GL_ID'
+      'gl_id' => 'nullable|exists:gls,gl_id',
+      'depre_gl' => 'nullable|exists:gls,gl_id',
+      'exp_gl' => 'nullable|exists:gls,gl_id',
+      'dispose_gl' => 'nullable|exists:gls,gl_id'
     ]);
 
     $type = FixedAssetType::create($validated);
@@ -220,10 +220,10 @@ class FixedAssetController extends Controller
 
     $validated = $request->validate([
       'fa_type' => 'required|string|max:50',
-      'gl_id' => 'nullable|exists:gls,GL_ID',
-      'depre_gl' => 'nullable|exists:gls,GL_ID',
-      'exp_gl' => 'nullable|exists:gls,GL_ID',
-      'dispose_gl' => 'nullable|exists:gls,GL_ID'
+      'gl_id' => 'nullable|exists:gls,gl_id',
+      'depre_gl' => 'nullable|exists:gls,gl_id',
+      'exp_gl' => 'nullable|exists:gls,gl_id',
+      'dispose_gl' => 'nullable|exists:gls,gl_id'
     ]);
 
     $type->update($validated);

@@ -24,6 +24,6 @@ class Config extends Model
   public static function getValue(string $name, $default = null)
   {
     $config = static::where('config_name', $name)->first();
-    return $config ? $config->CONFIG_VALUE : $default;
+    return $config ? $config->config_value : $default;
   }
 }

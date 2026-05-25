@@ -91,6 +91,44 @@ Each model sets `$table`, `$primaryKey`, `$fillable`, and `$casts` to match the
 columns defined in the canonical migration, plus the obvious `belongsTo` /
 `hasMany` relationships.
 
+### E. Second-pass deep audit — controllers, middleware, views
+
+A second exhaustive pass searched for any remaining UPPERCASE column/property
+references that would silently break on case-sensitive DB drivers, plus any
+`exists:` validation rules pointing at non-existent columns. The following
+additional issues were found and fixed:
+
+#### Models (2)
+
+| File | Issue |
+| ---- | ----- |
+| `app/Models/CustIncomeHistory.php` | `getNetIncomeAttribute()` used `$this->INCOME / EXPENSE / LIABILITY` — fixed to lowercase. |
+| `app/Models/Config.php` | `Config::getValue()` returned `$config->CONFIG_VALUE` — fixed to `config_value`. |
+
+#### Controllers (7)
+
+| File | Issue |
+| ---- | ----- |
+| `app/Http/Controllers/AccessProfileController.php` | DataTable callbacks used `$row->DEPOSIT_LIMIT/WITHDRAWAL_LIMIT/LOAN_LIMIT/PROFILE_ID` and validation `exists:modules,MODULE_ID` — fixed. |
+| `app/Http/Controllers/CashController.php` | Validation `exists:currencys,CCY_ID` — fixed to `ccy_id`. |
+| `app/Http/Controllers/CurrencyController.php` | DataTable callbacks + `unique:currencys,CURRENCY[,...,CCY_ID]` and `$currency->CCY_RATE` — all fixed to lowercase. |
+| `app/Http/Controllers/FixedAssetController.php` | 12 sites: DataTable callbacks (`$row->FA_ID/FA_TYPE/CURRENCY/PURCHASE_PRICE/NET_VALUE/DISPOSE_DATE/FA_TYPE_ID`), validation rules (`unique:fixed_assets,FA_CODE`, `exists:fixed_asset_types,FA_TYPE_ID`, `exists:currencys,CCY_ID`, `exists:gls,GL_ID`), and `$asset->NET_VALUE` — all fixed. |
+| `app/Http/Controllers/GroupController.php` | `getMembers()` and `searchLoans()` used `$detail->CONTRACT_NO`, `$loan->AMOUNT/OS_BALANCE`, `$customer->NAME_EN`; `addMember()` validation `exists:loan_schedules,CONTRACT_NO` — all fixed. |
+| `app/Http/Controllers/LocationController.php` | **Critical** — `getDistricts/getCommunes/getVillages` selected non-existent legacy columns (`district_id, district, district_kh` etc) instead of the actual modern columns (`id, name_en, name_kh`) from the migration. `storeDistrict/storeCommune/storeVillage` and their `update*` siblings validated the wrong field names and the wrong FK targets (`exists:provinces,PROVINCE_ID` etc). DataTable callbacks referenced `$row->DISTRICT_ID / COMMUNE_ID / VILLAGE_ID` and `$row->district->DISTRICT` etc. Manual `created_by/created_date/modify_by/modify_date` were being set on tables that use `$table->timestamps()` per the migration. All 15 sites fixed. |
+| `app/Http/Controllers/PassbookController.php` | DataTable callbacks (`$row->PASS_ISSUE_ID/PASS_ID/PASSBOOK_ID/STATUS/APPROVED_DATE`), customer/account/branch property access (`NAME_EN`, `ACCT_NO`, `BRANCH_NAME`), validation `exists:account_infos,ACCT_ID` and `exists:branchs,BRANCH_ID`, and `$issue->ACCT_ID/PASSBOOK_NO` on Passbook creation — all fixed. |
+
+#### Middleware (1)
+
+| File | Issue |
+| ---- | ----- |
+| `app/Http/Middleware/PermissionMiddleware.php` | `getAvailableModules()` returned `$module->MODULE_ID/MODULE/CONTROL_NAME/URL/TYPE`; `isSuperAdmin()` checked `$profile->PROFILE`; `getUserLimits()` returned `$profile->DEPOSIT_LIMIT/WITHDRAWAL_LIMIT/LOAN_LIMIT/NON_CASH_LIMIT` — all fixed. |
+
+#### Views (1)
+
+| File | Issue |
+| ---- | ----- |
+| `resources/views/fixed-assets/index.blade.php` | `<option>` values bound to `$type->FA_TYPE_ID/FA_TYPE` and `$currency->CCY_ID/CURRENCY` — fixed to lowercase. |
+
 ## Verification
 
 After applying the fixes, on a fresh database:

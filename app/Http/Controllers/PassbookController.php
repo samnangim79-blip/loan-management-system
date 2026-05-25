@@ -23,10 +23,10 @@ class PassbookController extends Controller
 
     return DataTables::of($issues)
       ->addColumn('customer_name', function ($row) {
-        return $row->account->customer->NAME_EN ?? 'N/A';
+        return $row->account->customer->name_en ?? 'N/A';
       })
       ->addColumn('account_no', function ($row) {
-        return $row->account->ACCT_NO ?? 'N/A';
+        return $row->account->acct_no ?? 'N/A';
       })
       ->addColumn('status_badge', function ($row) {
         $statuses = [
@@ -34,13 +34,13 @@ class PassbookController extends Controller
           1 => '<span class="badge bg-success">Approved</span>',
           2 => '<span class="badge bg-danger">Rejected</span>'
         ];
-        return $statuses[$row->STATUS] ?? '<span class="badge bg-secondary">Unknown</span>';
+        return $statuses[$row->status] ?? '<span class="badge bg-secondary">Unknown</span>';
       })
       ->addColumn('action', function ($row) {
         $btn = '<div class="btn-group" role="group">';
-        $btn .= '<button type="button" class="btn btn-sm btn-info view-btn" data-id="' . $row->PASS_ISSUE_ID . '"><i class="fas fa-eye"></i></button>';
-        if ($row->STATUS == 0) {
-          $btn .= '<button type="button" class="btn btn-sm btn-success approve-btn" data-id="' . $row->PASS_ISSUE_ID . '"><i class="fas fa-check"></i></button>';
+        $btn .= '<button type="button" class="btn btn-sm btn-info view-btn" data-id="' . $row->pass_issue_id . '"><i class="fas fa-eye"></i></button>';
+        if ($row->status == 0) {
+          $btn .= '<button type="button" class="btn btn-sm btn-success approve-btn" data-id="' . $row->pass_issue_id . '"><i class="fas fa-check"></i></button>';
         }
         $btn .= '</div>';
         return $btn;
@@ -52,7 +52,7 @@ class PassbookController extends Controller
   public function storeIssue(Request $request)
   {
     $validated = $request->validate([
-      'acct_id' => 'required|exists:account_infos,ACCT_ID',
+      'acct_id' => 'required|exists:account_infos,acct_id',
       'passbook_no' => 'required|string|max:255'
     ]);
 
@@ -83,8 +83,8 @@ class PassbookController extends Controller
 
     // Create passbook record
     Passbook::create([
-      'acct_id' => $issue->ACCT_ID,
-      'passbook_no' => $issue->PASSBOOK_NO,
+      'acct_id' => $issue->acct_id,
+      'passbook_no' => $issue->passbook_no,
       'last_printed_page' => 0,
       'last_printed_line' => 0,
       'status' => 'active'
@@ -108,13 +108,13 @@ class PassbookController extends Controller
 
     return DataTables::of($maintenance)
       ->addColumn('branch_name', function ($row) {
-        return $row->branch->BRANCH_NAME ?? 'N/A';
+        return $row->branch->branch_name ?? 'N/A';
       })
       ->addColumn('action', function ($row) {
         $btn = '<div class="btn-group" role="group">';
-        $btn .= '<button type="button" class="btn btn-sm btn-info view-btn" data-id="' . $row->PASS_ID . '"><i class="fas fa-eye"></i></button>';
-        if (!$row->APPROVED_DATE) {
-          $btn .= '<button type="button" class="btn btn-sm btn-success approve-btn" data-id="' . $row->PASS_ID . '"><i class="fas fa-check"></i></button>';
+        $btn .= '<button type="button" class="btn btn-sm btn-info view-btn" data-id="' . $row->pass_id . '"><i class="fas fa-eye"></i></button>';
+        if (!$row->approved_date) {
+          $btn .= '<button type="button" class="btn btn-sm btn-success approve-btn" data-id="' . $row->pass_id . '"><i class="fas fa-check"></i></button>';
         }
         $btn .= '</div>';
         return $btn;
@@ -127,7 +127,7 @@ class PassbookController extends Controller
   {
     $validated = $request->validate([
       'tran_date' => 'required|date',
-      'branch_id' => 'required|exists:branchs,BRANCH_ID',
+      'branch_id' => 'required|exists:branchs,branch_id',
       'qty' => 'required|integer|min:1',
       'pass_from_no' => 'required|string|max:255',
       'pass_to_no' => 'required|string|max:255'
@@ -172,15 +172,15 @@ class PassbookController extends Controller
 
     return DataTables::of($passbooks)
       ->addColumn('customer_name', function ($row) {
-        return $row->account->customer->NAME_EN ?? 'N/A';
+        return $row->account->customer->name_en ?? 'N/A';
       })
       ->addColumn('account_no', function ($row) {
-        return $row->account->ACCT_NO ?? 'N/A';
+        return $row->account->acct_no ?? 'N/A';
       })
       ->addColumn('action', function ($row) {
         $btn = '<div class="btn-group" role="group">';
-        $btn .= '<button type="button" class="btn btn-sm btn-info view-btn" data-id="' . $row->PASSBOOK_ID . '"><i class="fas fa-eye"></i></button>';
-        $btn .= '<button type="button" class="btn btn-sm btn-primary print-btn" data-id="' . $row->PASSBOOK_ID . '"><i class="fas fa-print"></i></button>';
+        $btn .= '<button type="button" class="btn btn-sm btn-info view-btn" data-id="' . $row->passbook_id . '"><i class="fas fa-eye"></i></button>';
+        $btn .= '<button type="button" class="btn btn-sm btn-primary print-btn" data-id="' . $row->passbook_id . '"><i class="fas fa-print"></i></button>';
         $btn .= '</div>';
         return $btn;
       })

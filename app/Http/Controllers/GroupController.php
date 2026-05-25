@@ -113,13 +113,13 @@ class GroupController extends Controller
       ->get();
 
     $members = $details->map(function ($detail) {
-      $loan = LoanSchedule::where('contract_no', $detail->CONTRACT_NO)->first();
+      $loan = LoanSchedule::where('contract_no', $detail->contract_no)->first();
       return [
-        'group_detail_id' => $detail->GROUP_DETAIL_ID,
-        'contract_no' => $detail->CONTRACT_NO,
-        'customer_name' => $loan->account->customer->NAME_EN ?? 'N/A',
-        'loan_amount' => $loan->AMOUNT ?? 0,
-        'os_balance' => $loan->OS_BALANCE ?? 0
+        'group_detail_id' => $detail->group_detail_id,
+        'contract_no' => $detail->contract_no,
+        'customer_name' => $loan->account->customer->name_en ?? 'N/A',
+        'loan_amount' => $loan->amount ?? 0,
+        'os_balance' => $loan->os_balance ?? 0
       ];
     });
 
@@ -129,7 +129,7 @@ class GroupController extends Controller
   public function addMember(Request $request, $id)
   {
     $validated = $request->validate([
-      'contract_no' => 'required|exists:loan_schedules,CONTRACT_NO'
+      'contract_no' => 'required|exists:loan_schedules,contract_no'
     ]);
 
     // Check if already a member
@@ -183,9 +183,9 @@ class GroupController extends Controller
       ->get()
       ->map(function ($loan) {
         return [
-          'contract_no' => $loan->CONTRACT_NO,
-          'customer_name' => $loan->account->customer->NAME_EN ?? 'N/A',
-          'amount' => $loan->AMOUNT
+          'contract_no' => $loan->contract_no,
+          'customer_name' => $loan->account->customer->name_en ?? 'N/A',
+          'amount' => $loan->amount
         ];
       });
 

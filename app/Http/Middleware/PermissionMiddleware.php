@@ -167,11 +167,11 @@ class PermissionMiddleware
 
     return $modules->map(function ($module) {
       return [
-        'id' => $module->MODULE_ID,
-        'name' => $module->MODULE,
-        'control_name' => $module->CONTROL_NAME,
-        'url' => $module->URL,
-        'type' => $module->TYPE,
+        'id' => $module->module_id,
+        'name' => $module->module,
+        'control_name' => $module->control_name,
+        'url' => $module->url,
+        'type' => $module->type,
       ];
     })->toArray();
   }
@@ -220,7 +220,7 @@ class PermissionMiddleware
     // Check by profile name for UserLogin
     if ($user instanceof UserLogin && $user->profile) {
       $adminProfiles = ['Super Admin', 'Administrator', 'Admin', 'super_admin'];
-      return in_array($user->profile->PROFILE, $adminProfiles);
+      return in_array($user->profile->profile, $adminProfiles);
     }
 
     // Check if User has a linked UserLogin with admin profile
@@ -228,7 +228,7 @@ class PermissionMiddleware
       $userLogin = $this->getUserLoginFromUser($user);
       if ($userLogin && $userLogin->profile) {
         $adminProfiles = ['Super Admin', 'Administrator', 'Admin', 'super_admin'];
-        return in_array($userLogin->profile->PROFILE, $adminProfiles);
+        return in_array($userLogin->profile->profile, $adminProfiles);
       }
     }
 
@@ -310,10 +310,10 @@ class PermissionMiddleware
     }
 
     return [
-      'deposit_limit' => (float) $profile->DEPOSIT_LIMIT,
-      'withdrawal_limit' => (float) $profile->WITHDRAWAL_LIMIT,
-      'loan_limit' => (float) $profile->LOAN_LIMIT,
-      'non_cash_limit' => (float) $profile->NON_CASH_LIMIT,
+      'deposit_limit' => (float) $profile->deposit_limit,
+      'withdrawal_limit' => (float) $profile->withdrawal_limit,
+      'loan_limit' => (float) $profile->loan_limit,
+      'non_cash_limit' => (float) $profile->non_cash_limit,
     ];
   }
 

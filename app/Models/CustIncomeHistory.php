@@ -45,6 +45,6 @@ class CustIncomeHistory extends Model
    */
   public function getNetIncomeAttribute()
   {
-    return $this->INCOME - $this->EXPENSE - $this->LIABILITY;
+    return $this->income - $this->expense - $this->liability;
   }
 }

@@ -69,7 +69,7 @@ class CashController extends Controller
             'tran_date' => 'required|date',
             'amount' => 'required|numeric|min:0.01',
             'in_out' => 'required|in:i,o',
-            'ccy_id' => 'required|exists:currencys,CCY_ID',
+            'ccy_id' => 'required|exists:currencys,ccy_id',
             'remark' => 'nullable|string|max:50'
         ]);
 
@@ -155,7 +155,7 @@ class CashController extends Controller
         $validated = $request->validate([
             'amount' => 'required|numeric|min:0.01',
             'in_ou' => 'required|in:i,o',
-            'ccy_id' => 'required|exists:currencys,CCY_ID',
+            'ccy_id' => 'required|exists:currencys,ccy_id',
             'remark' => 'nullable|string'
         ]);
 
