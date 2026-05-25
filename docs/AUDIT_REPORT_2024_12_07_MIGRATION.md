@@ -129,6 +129,54 @@ additional issues were found and fixed:
 | ---- | ----- |
 | `resources/views/fixed-assets/index.blade.php` | `<option>` values bound to `$type->FA_TYPE_ID/FA_TYPE` and `$currency->CCY_ID/CURRENCY` — fixed to lowercase. |
 
+### F. Third-pass deep audit — view-side (JS / form names) + missing routes
+
+The second pass covered every server-side reference; this third pass scanned
+**every Blade template** for client-side references (form `name="..."`, AJAX
+JSON access, DataTable column `data: '...'`) that did not match the column
+names from the canonical migration. Each of these would silently submit the
+wrong field name to the controller (so validation always sees `null`) or read
+the wrong key from the JSON response (so the UI shows blank fields).
+
+#### Blade DataTable column definitions
+
+| File | Issue |
+| ---- | ----- |
+| `resources/views/fixed-assets/index.blade.php` | DataTable used `FA_ID`, `FA_CODE`, `FA_DESC`, `PURCHASE_DATE`, `USEFULL_LIFE`, `DISPOSE_DATE`. JSON modal also used `asset.FA_CODE/FA_DESC/PURCHASE_DATE/PURCHASE_PRICE/USEFULL_LIFE/NET_VALUE/DISPOSE_DATE/FA_COMMENT/DISPOSE_VALUE/DISPOSE_COMMENT`, `asset.asset_type?.FA_TYPE`, `asset.currency?.CURRENCY`, `depre.DEPRE_DATE/AMOUNT`. Edit handler used `FA_ID/FA_CODE/FA_DESC/FA_COMMENT/FA_TYPE_ID/USEFULL_LIFE/CREDIT_GL`. Depreciate handler used `FA_ID/FA_CODE/FA_DESC/NET_VALUE`. — All fixed. |
+| `resources/views/fixed-assets/types.blade.php` | DataTable used `FA_TYPE_ID/FA_TYPE/GL_ID/DEPRE_GL/EXP_GL/DISPOSE_GL`. Edit handler used `rowData.FA_TYPE_ID/FA_TYPE/GL_ID/DEPRE_GL/EXP_GL/DISPOSE_GL`. — All fixed. |
+
+#### Blade `row.UPPERCASE` JSON access (DataTable view dialogs)
+
+| File | Issue |
+| ---- | ----- |
+| `resources/views/passbooks/maintenance.blade.php` | `row.APPROVED_DATE/PASS_ID/TRAN_DATE/QTY/PASS_FROM_NO/PASS_TO_NO` — fixed. |
+| `resources/views/passbooks/list.blade.php` | `row.PASSBOOK_ID/PASSBOOK_NO/LAST_PRINTED_PAGE/LAST_PRINTED_LINE` — fixed. |
+
+#### Blade form field names — submitted as form data; controller validation expected lowercase
+
+| File | Form fields fixed |
+| ---- | ----------------- |
+| `resources/views/passbooks/maintenance.blade.php` | `BRANCH_ID`, `TRAN_DATE`, `PASS_FROM_NO`, `PASS_TO_NO` → lowercase. |
+| `resources/views/passbooks/index.blade.php` | `ACCT_ID`, `PASSBOOK_NO` → lowercase. |
+| `resources/views/passbooks/list.blade.php` | `LAST_PRINTED_PAGE`, `LAST_PRINTED_LINE` → lowercase. |
+| `resources/views/fixed-deposits/index.blade.php` | `FD_CERT_ID`, `ACCT_ID`, `DATE_ISSUE`, `FD_TERM_ID`, `FD_OPTION_ID`, `INT_RATE`, `EXTRA_RATE`, `MATURED_DATE`, `ACCT_FOR_INT`, `ACCT_FOR_PRIN` → all lowercased. |
+| `resources/views/cash/transfers.blade.php` | `TRAN_DATE`, `IN_OU`, `CCY_ID`, `FROM_TO` → lowercased. Critical: `name="IN_OU"` was being rejected by the `'in_ou' => 'required|in:i,o'` validator. |
+| `resources/views/access-profiles/index.blade.php` | `DEPOSIT_LIMIT`, `WITHDRAWAL_LIMIT`, `LOAN_LIMIT`, `NON_CASH_LIMIT` → lowercased. Plus the JS edit/view handlers were reading `profile.PROFILE_ID/PROFILE/DEPOSIT_LIMIT/WITHDRAWAL_LIMIT/LOAN_LIMIT/NON_CASH_LIMIT` and the modules list `module.MODULE` — all fixed. Form `<input>` for profile name had `id=""` which broke `$('#profile').val(...)` in the edit handler — set to `id="profile"`. |
+| `resources/views/customers/create.blade.php` | The address cascade dropdowns were reading `province.PROVINCE_ID/PROVINCE/PROVINCE_KH`, `district.DISTRICT_ID/DISTRICT/DISTRICT_KH`, `commune.COMMUNE_ID/COMMUNE/COMMUNE_KH`, `village.VILLAGE_ID/VILLAGE/VILLAGE_KH` — none of which exist in the modern location schema. Fixed to `id`, `name_en`, `name_kh` matching the migration. Also fixed `$('#VILLAGE_ID')` → `$('#village_id')` so the village select is correctly cleared on parent change. |
+| `resources/views/fixed-deposits/index.blade.php` | `loadAccounts()` was reading `account.customer?.NAME_EN`, `account.ACCT_ID`, `account.ACCT_NO` — fixed. |
+| `resources/views/interest/rates.blade.php` | Edit handler was setting `#INT_RATE/#INT_TYPE/#INT_OPTION/#DESCRIPTION` — but `int_rates` only has `int_rate_id`, `rate`, `acct_type_id` per the migration. Replaced with `#rate` and `#acct_type_id`. |
+| `resources/views/config/index.blade.php` | `loadConfigs()` was reading `config.CONFIG_NAME` and `config.CONFIG_VALUE` — fixed to `config_name`, `config_value`. |
+
+#### Missing API routes
+
+`resources/views/customers/create.blade.php` calls `/api/provinces`,
+`/api/districts/{provinceId}`, `/api/communes/{districtId}`, and
+`/api/villages/{communeId}` for the location cascade. The controller methods
+exist (`LocationController::getProvinces/getDistricts/getCommunes/getVillages`)
+and already return the correct lowercase JSON shape, but the four route
+declarations were missing — every cascade dropdown was silently broken.
+Added to `routes/web.php` under the existing `Route::prefix('api')` group.
+
 ## Verification
 
 After applying the fixes, on a fresh database:

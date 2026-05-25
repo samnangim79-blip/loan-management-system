@@ -191,17 +191,17 @@
         </div>
         <form id="fdForm">
           @csrf
-          <input type="hidden" name="FD_CERT_ID" id="fdCertId">
+          <input type="hidden" name="fd_cert_id" id="fdCertId">
           <div class="modal-body">
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="certNumber" class="form-label">{{ __('common.general.certificate_number') }} <span
                     class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="certNumber" name="FD_CERT_ID" required>
+                <input type="text" class="form-control" id="certNumber" name="fd_cert_id" required>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="accountId" class="form-label">{{ __('common.general.account') }} <span class="text-danger">*</span></label>
-                <select class="form-control" id="accountId" name="ACCT_ID" required>
+                <select class="form-control" id="accountId" name="acct_id" required>
                   <option value="">{{ __('common.form.select_account') }}</option>
                 </select>
               </div>
@@ -209,12 +209,12 @@
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="issueDate" class="form-label">{{ __('common.general.issue_date') }} <span class="text-danger">*</span></label>
-                <input type="date" class="form-control" id="issueDate" name="DATE_ISSUE"
+                <input type="date" class="form-control" id="issueDate" name="date_issue"
                   value="{{ date('Y-m-d') }}" required>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="fdTerm" class="form-label">{{ __('common.general.term') }} <span class="text-danger">*</span></label>
-                <select class="form-control" id="fdTerm" name="FD_TERM_ID" required>
+                <select class="form-control" id="fdTerm" name="fd_term_id" required>
                   <option value="">{{ __('common.form.select_term') }}</option>
                   @foreach ($terms as $term)
                     <option value="{{ $term->fd_term_id }}" data-months="{{ $term->num_of_month }}">
@@ -227,7 +227,7 @@
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="fdOption" class="form-label">{{ __('common.form.option') }} <span class="text-danger">*</span></label>
-                <select class="form-control" id="fdOption" name="FD_OPTION_ID" required>
+                <select class="form-control" id="fdOption" name="fd_option_id" required>
                   <option value="">{{ __('common.form.select_option') }}</option>
                   @foreach ($options as $option)
                     <option value="{{ $option->fd_option_id }}">{{ $option->fd_option }}</option>
@@ -246,28 +246,28 @@
             <div class="row">
               <div class="col-md-4 mb-3">
                 <label for="intRate" class="form-label">{{ __('common.general.interest_rate_percent') }} <span class="text-danger">*</span></label>
-                <input type="number" class="form-control" id="intRate" name="INT_RATE" step="0.01"
+                <input type="number" class="form-control" id="intRate" name="int_rate" step="0.01"
                   min="0" max="100" required>
               </div>
               <div class="col-md-4 mb-3">
                 <label for="extraRate" class="form-label">{{ __('common.general.extra_rate_percent') }}</label>
-                <input type="number" class="form-control" id="extraRate" name="EXTRA_RATE" step="0.01"
+                <input type="number" class="form-control" id="extraRate" name="extra_rate" step="0.01"
                   min="0" max="100" value="0">
               </div>
               <div class="col-md-4 mb-3">
                 <label for="maturityDate" class="form-label">{{ __('common.general.maturity_date') }}</label>
-                <input type="date" class="form-control" id="maturityDate" name="MATURED_DATE" readonly>
+                <input type="date" class="form-control" id="maturityDate" name="matured_date" readonly>
               </div>
             </div>
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="acctForInt" class="form-label">{{ __('common.general.interest_credit_account') }}</label>
-                <input type="text" class="form-control" id="acctForInt" name="ACCT_FOR_INT"
+                <input type="text" class="form-control" id="acctForInt" name="acct_for_int"
                   placeholder="{{ __('common.form.account_for_interest_payment') }}">
               </div>
               <div class="col-md-6 mb-3">
                 <label for="acctForPrin" class="form-label">{{ __('common.general.principal_credit_account') }}</label>
-                <input type="text" class="form-control" id="acctForPrin" name="ACCT_FOR_PRIN"
+                <input type="text" class="form-control" id="acctForPrin" name="acct_for_prin"
                   placeholder="{{ __('common.form.account_for_principal_payment') }}">
               </div>
             </div>
@@ -614,8 +614,8 @@
         $.get('{{ url('api/accounts/savings') }}', function(response) {
           var options = '<option value="">{{ __('common.form.select_account') }}</option>';
           $.each(response, function(i, account) {
-            var customerName = account.customer?.NAME_EN || 'Unknown';
-            options += '<option value="' + account.ACCT_ID + '">' + account.ACCT_NO + ' - ' + customerName +
+            var customerName = account.customer?.name_en || 'Unknown';
+            options += '<option value="' + account.acct_id + '">' + account.acct_no + ' - ' + customerName +
               '</option>';
           });
           $('#accountId').html(options);

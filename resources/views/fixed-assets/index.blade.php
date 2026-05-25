@@ -242,24 +242,24 @@
         serverSide: true,
         ajax: '{{ route('fixed-assets.data') }}',
         columns: [{
-            data: 'FA_ID',
-            name: 'FA_ID'
+            data: 'fa_id',
+            name: 'fa_id'
           },
           {
-            data: 'FA_CODE',
-            name: 'FA_CODE'
+            data: 'fa_code',
+            name: 'fa_code'
           },
           {
-            data: 'FA_DESC',
-            name: 'FA_DESC'
+            data: 'fa_desc',
+            name: 'fa_desc'
           },
           {
             data: 'type_name',
             name: 'type_name'
           },
           {
-            data: 'PURCHASE_DATE',
-            name: 'PURCHASE_DATE',
+            data: 'purchase_date',
+            name: 'purchase_date',
             render: function(data) {
               return data ? new Date(data).toLocaleDateString() : 'N/A';
             }
@@ -279,15 +279,15 @@
             name: 'currency_code'
           },
           {
-            data: 'USEFULL_LIFE',
-            name: 'USEFULL_LIFE',
+            data: 'usefull_life',
+            name: 'usefull_life',
             render: function(data) {
               return data ? data + ' years' : 'N/A';
             }
           },
           {
-            data: 'DISPOSE_DATE',
-            name: 'DISPOSE_DATE',
+            data: 'dispose_date',
+            name: 'dispose_date',
             render: function(data) {
               if (data) {
                 return '<span class="badge bg-danger">Disposed</span>';
@@ -359,28 +359,28 @@
             let html = `
               <div class="row">
                 <div class="col-md-6">
-                  <p><strong>Asset Code:</strong> ${asset.FA_CODE || 'N/A'}</p>
-                  <p><strong>Description:</strong> ${asset.FA_DESC || 'N/A'}</p>
-                  <p><strong>Asset Type:</strong> ${asset.asset_type?.FA_TYPE || 'N/A'}</p>
-                  <p><strong>Purchase Date:</strong> ${asset.PURCHASE_DATE || 'N/A'}</p>
-                  <p><strong>Purchase Price:</strong> ${asset.PURCHASE_PRICE || 'N/A'}</p>
+                  <p><strong>Asset Code:</strong> ${asset.fa_code || 'N/A'}</p>
+                  <p><strong>Description:</strong> ${asset.fa_desc || 'N/A'}</p>
+                  <p><strong>Asset Type:</strong> ${asset.asset_type?.fa_type || 'N/A'}</p>
+                  <p><strong>Purchase Date:</strong> ${asset.purchase_date || 'N/A'}</p>
+                  <p><strong>Purchase Price:</strong> ${asset.purchase_price || 'N/A'}</p>
                 </div>
                 <div class="col-md-6">
-                  <p><strong>Currency:</strong> ${asset.currency?.CURRENCY || 'N/A'}</p>
-                  <p><strong>Useful Life:</strong> ${asset.USEFULL_LIFE || 'N/A'} years</p>
-                  <p><strong>Net Value:</strong> ${asset.NET_VALUE || 'N/A'}</p>
-                  <p><strong>Status:</strong> ${asset.DISPOSE_DATE ? '<span class="badge bg-danger">Disposed</span>' : '<span class="badge bg-success">Active</span>'}</p>
+                  <p><strong>Currency:</strong> ${asset.currency?.currency || 'N/A'}</p>
+                  <p><strong>Useful Life:</strong> ${asset.usefull_life || 'N/A'} years</p>
+                  <p><strong>Net Value:</strong> ${asset.net_value || 'N/A'}</p>
+                  <p><strong>Status:</strong> ${asset.dispose_date ? '<span class="badge bg-danger">Disposed</span>' : '<span class="badge bg-success">Active</span>'}</p>
                 </div>
               </div>
-              ${asset.FA_COMMENT ? `<hr><p><strong>Comment:</strong> ${asset.FA_COMMENT}</p>` : ''}
-              ${asset.DISPOSE_DATE ? `<hr><p><strong>Disposal Date:</strong> ${asset.DISPOSE_DATE}</p><p><strong>Disposal Value:</strong> ${asset.DISPOSE_VALUE}</p>${asset.DISPOSE_COMMENT ? `<p><strong>Disposal Comment:</strong> ${asset.DISPOSE_COMMENT}</p>` : ''}` : ''}
+              ${asset.fa_comment ? `<hr><p><strong>Comment:</strong> ${asset.fa_comment}</p>` : ''}
+              ${asset.dispose_date ? `<hr><p><strong>Disposal Date:</strong> ${asset.dispose_date}</p><p><strong>Disposal Value:</strong> ${asset.dispose_value}</p>${asset.dispose_comment ? `<p><strong>Disposal Comment:</strong> ${asset.dispose_comment}</p>` : ''}` : ''}
             `;
 
             if (asset.depreciations && asset.depreciations.length > 0) {
               html +=
                 '<hr><h6>Depreciation History:</h6><table class="table table-sm"><thead><tr><th>Date</th><th>Amount</th></tr></thead><tbody>';
               asset.depreciations.forEach(function(depre) {
-                html += `<tr><td>${depre.DEPRE_DATE}</td><td>${depre.AMOUNT}</td></tr>`;
+                html += `<tr><td>${depre.depre_date}</td><td>${depre.amount}</td></tr>`;
               });
               html += '</tbody></table>';
             }
@@ -402,13 +402,13 @@
           url: `/fixed-assets/${assetId}`,
           type: 'GET',
           success: function(asset) {
-            $('#asset_id').val(asset.FA_ID);
-            $('#fa_code').val(asset.FA_CODE);
-            $('#fa_desc').val(asset.FA_DESC);
-            $('#fa_comment').val(asset.FA_COMMENT);
-            $('#fa_type_id').val(asset.FA_TYPE_ID);
-            $('#usefull_life').val(asset.USEFULL_LIFE);
-            $('#credit_gl').val(asset.CREDIT_GL);
+            $('#asset_id').val(asset.fa_id);
+            $('#fa_code').val(asset.fa_code);
+            $('#fa_desc').val(asset.fa_desc);
+            $('#fa_comment').val(asset.fa_comment);
+            $('#fa_type_id').val(asset.fa_type_id);
+            $('#usefull_life').val(asset.usefull_life);
+            $('#credit_gl').val(asset.credit_gl);
 
             $('#modalTitle').text('Edit Fixed Asset');
             $('#assetModal').modal('show');
@@ -427,11 +427,11 @@
           url: `/fixed-assets/${assetId}`,
           type: 'GET',
           success: function(asset) {
-            $('#depre_asset_id').val(asset.FA_ID);
+            $('#depre_asset_id').val(asset.fa_id);
             $('#assetInfo').html(
-              `<strong>${asset.FA_CODE}</strong> - ${asset.FA_DESC}<br>Current Net Value: ${asset.NET_VALUE} ${asset.currency?.CURRENCY || ''}`
+              `<strong>${asset.fa_code}</strong> - ${asset.fa_desc}<br>Current Net Value: ${asset.net_value} ${asset.currency?.currency || ''}`
             );
-            $('#amount').attr('max', asset.NET_VALUE);
+            $('#amount').attr('max', asset.net_value);
             $('#depreciationModal').modal('show');
           },
           error: function() {

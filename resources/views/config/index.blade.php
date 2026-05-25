@@ -1289,12 +1289,12 @@
           success: function(response) {
             if (response.success && response.data) {
               response.data.forEach(function(config) {
-                const input = $(`.config-input[data-config="${config.CONFIG_NAME}"]`);
+                const input = $(`.config-input[data-config="${config.config_name}"]`);
                 if (input.length) {
                   if (input.attr('type') === 'checkbox') {
-                    input.prop('checked', config.CONFIG_VALUE === '1');
+                    input.prop('checked', config.config_value === '1');
                   } else {
-                    input.val(config.CONFIG_VALUE);
+                    input.val(config.config_value);
                   }
                 }
               });

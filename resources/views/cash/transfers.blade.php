@@ -169,12 +169,12 @@
           <div class="modal-body">
             <div class="mb-3">
               <label for="transferDate" class="form-label">Transfer Date <span class="text-danger">*</span></label>
-              <input type="date" class="form-control" id="transferDate" name="TRAN_DATE"
+              <input type="date" class="form-control" id="transferDate" name="tran_date"
                 value="{{ date(__('common.form.ymd')) }}" required>
             </div>
             <div class="mb-3">
               <label for="transferType" class="form-label">Transfer Type <span class="text-danger">*</span></label>
-              <select class="form-control" id="transferType" name="IN_OU" required>
+              <select class="form-control" id="transferType" name="in_ou" required>
                 <option value="">{{ __('common.general.select_type') }}</option>
                 <option value="i">Transfer In (Receiving)</option>
                 <option value="o">Transfer Out (Sending)</option>
@@ -182,7 +182,7 @@
             </div>
             <div class="mb-3">
               <label for="transferCurrency" class="form-label">Currency <span class="text-danger">*</span></label>
-              <select class="form-control" id="transferCurrency" name="CCY_ID" required>
+              <select class="form-control" id="transferCurrency" name="ccy_id" required>
                 <option value="">{{ __('common.form.select_currency') }}</option>
                 @foreach ($currencies as $currency)
                   <option value="{{ $currency->ccy_id }}">{{ $currency->currency }} - {{ $currency->description }}
@@ -200,7 +200,7 @@
             </div>
             <div class="mb-3">
               <label for="transferBranch" class="form-label">From/To Branch</label>
-              <input type="text" class="form-control" id="transferBranch" name="FROM_TO"
+              <input type="text" class="form-control" id="transferBranch" name="from_to"
                 placeholder="{{ __('common.general.enter_branch_name') }}">
             </div>
             <div class="mb-3">

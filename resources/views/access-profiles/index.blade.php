@@ -57,7 +57,7 @@
 
             <div class="mb-3">
               <label for="profile" class="form-label">Profile Name <span class="text-danger">*</span></label>
-              <input type="text" class="form-control" id="" name="profile" required maxlength="50">
+              <input type="text" class="form-control" id="profile" name="profile" required maxlength="50">
               <small class="">e.g., Branch Manager, Loan Officer, Teller</small>
             </div>
 
@@ -70,7 +70,7 @@
                   <label for="DEPOSIT_LIMIT" class="form-label">{{ __('common.form.deposit_limit') }}</label>
                   <div class="">
                     <span class="">$</span>
-                    <input type="number" class="form-control" id="DEPOSIT_LIMIT" name="DEPOSIT_LIMIT" step="0.01"
+                    <input type="number" class="form-control" id="deposit_limit" name="deposit_limit" step="0.01"
                       min="0" value="0">
                   </div>
                 </div>
@@ -80,7 +80,7 @@
                   <label for="WITHDRAWAL_LIMIT" class="form-label">{{ __('common.form.withdrawal_limit') }}</label>
                   <div class="">
                     <span class="">$</span>
-                    <input type="number" class="form-control" id="WITHDRAWAL_LIMIT" name="WITHDRAWAL_LIMIT"
+                    <input type="number" class="form-control" id="withdrawal_limit" name="withdrawal_limit"
                       step="0.01" min="0" value="0">
                   </div>
                 </div>
@@ -93,7 +93,7 @@
                   <label for="LOAN_LIMIT" class="form-label">{{ __('common.form.loan_limit') }}</label>
                   <div class="">
                     <span class="">$</span>
-                    <input type="number" class="form-control" id="LOAN_LIMIT" name="LOAN_LIMIT" step="0.01"
+                    <input type="number" class="form-control" id="loan_limit" name="loan_limit" step="0.01"
                       min="0" value="0">
                   </div>
                 </div>
@@ -103,7 +103,7 @@
                   <label for="NON_CASH_LIMIT" class="form-label">Non-Cash Limit</label>
                   <div class="">
                     <span class="">$</span>
-                    <input type="number" class="form-control" id="NON_CASH_LIMIT" name="NON_CASH_LIMIT" step="0.01"
+                    <input type="number" class="form-control" id="non_cash_limit" name="non_cash_limit" step="0.01"
                       min="0" value="0">
                   </div>
                 </div>
@@ -364,12 +364,12 @@
           url: `/access-profiles/${profileId}`,
           type: 'GET',
           success: function(profile) {
-            $('#profile_id').val(profile.PROFILE_ID);
-            $('#PROFILE').val(profile.PROFILE);
-            $('#DEPOSIT_LIMIT').val(profile.DEPOSIT_LIMIT || 0);
-            $('#WITHDRAWAL_LIMIT').val(profile.WITHDRAWAL_LIMIT || 0);
-            $('#LOAN_LIMIT').val(profile.LOAN_LIMIT || 0);
-            $('#NON_CASH_LIMIT').val(profile.NON_CASH_LIMIT || 0);
+            $('#profile_id').val(profile.profile_id);
+            $('#profile').val(profile.profile);
+            $('#deposit_limit').val(profile.deposit_limit || 0);
+            $('#withdrawal_limit').val(profile.withdrawal_limit || 0);
+            $('#loan_limit').val(profile.loan_limit || 0);
+            $('#non_cash_limit').val(profile.non_cash_limit || 0);
 
             $('#modalTitle').html('<i class="fas fa-user-shield me-2"></i>Edit Access Profile');
             $('#profileModal').modal('{{ __('common.general.show') }}');
@@ -388,8 +388,8 @@
           url: `/access-profiles/${profileId}`,
           type: 'GET',
           success: function(profile) {
-            $('#view_profile_id').text(profile.PROFILE_ID);
-            $('#view_profile_name').text(profile.PROFILE);
+            $('#view_profile_id').text(profile.profile_id);
+            $('#view_profile_name').text(profile.profile);
 
             var formatLimit = function(val) {
               return val == 0 ? '<span class="">{{ __('common.general.unlimited') }}</span>' : '$' + parseFloat(val)
@@ -398,10 +398,10 @@
                 });
             };
 
-            $('#view_deposit_limit').html(formatLimit(profile.DEPOSIT_LIMIT));
-            $('#view_withdrawal_limit').html(formatLimit(profile.WITHDRAWAL_LIMIT));
-            $('#view_loan_limit').html(formatLimit(profile.LOAN_LIMIT));
-            $('#view_non_cash_limit').html(formatLimit(profile.NON_CASH_LIMIT));
+            $('#view_deposit_limit').html(formatLimit(profile.deposit_limit));
+            $('#view_withdrawal_limit').html(formatLimit(profile.withdrawal_limit));
+            $('#view_loan_limit').html(formatLimit(profile.loan_limit));
+            $('#view_non_cash_limit').html(formatLimit(profile.non_cash_limit));
 
             // Display permissions
             var permissionsHtml = '';
@@ -409,7 +409,7 @@
               profile.modules.forEach(function(module) {
                 permissionsHtml +=
                   '<div class="col-md-4 mb-1"><small><i class="fas fa-check text-success me-1"></i>' +
-                  module.MODULE + '</small></div>';
+                  module.module + '</small></div>';
               });
             } else {
               permissionsHtml =
@@ -440,7 +440,7 @@
               url: `/access-profiles/${profileId}`,
               type: 'GET',
               success: function(profile) {
-                $('#permissions_profile_name').text(profile.PROFILE);
+                $('#permissions_profile_name').text(profile.profile);
               }
             });
 

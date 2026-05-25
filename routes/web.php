@@ -476,6 +476,10 @@ Route::prefix('reports')->group(function () {
 
 // API Routes for AJAX
 Route::prefix('api')->group(function () {
+    Route::get('/provinces', [LocationController::class, 'getProvinces'])->name('api.provinces');
+    Route::get('/districts/{provinceId}', [LocationController::class, 'getDistricts'])->name('api.districts');
+    Route::get('/communes/{districtId}', [LocationController::class, 'getCommunes'])->name('api.communes');
+    Route::get('/villages/{communeId}', [LocationController::class, 'getVillages'])->name('api.villages');
     Route::get('/villages/search', [LocationController::class, 'searchVillages'])->name('api.villages.search');
     Route::get('/nationalities', [NationalityController::class, 'all'])->name('api.nationalities');
     Route::get('/customers/search', [CustomerController::class, 'searchCustomers'])->name('api.customers.search');

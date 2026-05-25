@@ -106,43 +106,43 @@
         serverSide: true,
         ajax: '{{ route('fixed-assets.types-data') }}',
         columns: [{
-            data: 'FA_TYPE_ID',
-            name: 'FA_TYPE_ID'
+            data: 'fa_type_id',
+            name: 'fa_type_id'
           },
           {
-            data: 'FA_TYPE',
-            name: 'FA_TYPE'
+            data: 'fa_type',
+            name: 'fa_type'
           },
           {
-            data: 'GL_ID',
-            name: 'GL_ID',
+            data: 'gl_id',
+            name: 'gl_id',
             render: function(data) {
               return data || '<span class="text-muted">N/A</span>';
             }
           },
           {
-            data: 'DEPRE_GL',
-            name: 'DEPRE_GL',
+            data: 'depre_gl',
+            name: 'depre_gl',
             render: function(data) {
               return data || '<span class="text-muted">N/A</span>';
             }
           },
           {
-            data: 'EXP_GL',
-            name: 'EXP_GL',
+            data: 'exp_gl',
+            name: 'exp_gl',
             render: function(data) {
               return data || '<span class="text-muted">N/A</span>';
             }
           },
           {
-            data: 'DISPOSE_GL',
-            name: 'DISPOSE_GL',
+            data: 'dispose_gl',
+            name: 'dispose_gl',
             render: function(data) {
               return data || '<span class="text-muted">N/A</span>';
             }
           },
           {
-            data: 'FA_TYPE_ID',
+            data: 'fa_type_id',
             name: 'assets_count',
             orderable: false,
             searchable: false,
@@ -210,12 +210,12 @@
         // Get the row data from DataTable
         const rowData = table.row($(this).closest('tr')).data();
 
-        $('#type_id').val(rowData.FA_TYPE_ID);
-        $('#fa_type').val(rowData.FA_TYPE);
-        $('#gl_id').val(rowData.GL_ID || '');
-        $('#depre_gl').val(rowData.DEPRE_GL || '');
-        $('#exp_gl').val(rowData.EXP_GL || '');
-        $('#dispose_gl').val(rowData.DISPOSE_GL || '');
+        $('#type_id').val(rowData.fa_type_id);
+        $('#fa_type').val(rowData.fa_type);
+        $('#gl_id').val(rowData.gl_id || '');
+        $('#depre_gl').val(rowData.depre_gl || '');
+        $('#exp_gl').val(rowData.exp_gl || '');
+        $('#dispose_gl').val(rowData.dispose_gl || '');
 
         $('#modalTitle').text('Edit Asset Type');
         $('#typeModal').modal('show');

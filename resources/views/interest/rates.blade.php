@@ -244,10 +244,8 @@
           success: function(rate) {
             $('#editMode').val('1');
             $('#editId').val(id);
-            $('#INT_RATE').val(rate.INT_RATE);
-            $('#INT_TYPE').val(rate.INT_TYPE);
-            $('#INT_OPTION').val(rate.INT_OPTION);
-            $('#DESCRIPTION').val(rate.DESCRIPTION);
+            $('#rate').val(rate.rate);
+            $('#acct_type_id').val(rate.acct_type_id);
             $('#rateModalLabel').text('{{ __('common.general.edit_interest_rate') }}');
             $('#rateModal').modal('{{ __('common.general.show') }}');
           },

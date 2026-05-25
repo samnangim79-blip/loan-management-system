@@ -359,8 +359,8 @@
           $('#province').empty().append('<option value="">{{ __('common.form.select_province') }}</option>');
           $.each(data, function(index, province) {
             $('#province').append($('<option>', {
-              value: province.PROVINCE_ID,
-              text: province.PROVINCE + ' - ' + province.PROVINCE_KH
+              value: province.id,
+              text: province.name_en + ' - ' + province.name_kh
             }));
           });
         }
@@ -373,7 +373,7 @@
           '<option value="">{{ __('common.form.select_district') }}</option>');
         $('#commune').prop('disabled', true).empty().append(
           '<option value="">{{ __('common.form.select_commune') }}</option>');
-        $('#VILLAGE_ID').prop('disabled', true).empty().append(
+        $('#village_id').prop('disabled', true).empty().append(
           '<option value="">{{ __('common.form.select_village') }}</option>');
 
         if (provinceId) {
@@ -383,8 +383,8 @@
             success: function(data) {
               $.each(data, function(index, district) {
                 $('#district').append($('<option>', {
-                  value: district.DISTRICT_ID,
-                  text: district.DISTRICT + ' - ' + district.DISTRICT_KH
+                  value: district.id,
+                  text: district.name_en + ' - ' + district.name_kh
                 }));
               });
             }
@@ -397,7 +397,7 @@
         var districtId = $(this).val();
         $('#commune').prop('disabled', !districtId).empty().append(
           '<option value="">{{ __('common.form.select_commune') }}</option>');
-        $('#VILLAGE_ID').prop('disabled', true).empty().append(
+        $('#village_id').prop('disabled', true).empty().append(
           '<option value="">{{ __('common.form.select_village') }}</option>');
 
         if (districtId) {
@@ -407,8 +407,8 @@
             success: function(data) {
               $.each(data, function(index, commune) {
                 $('#commune').append($('<option>', {
-                  value: commune.COMMUNE_ID,
-                  text: commune.COMMUNE + ' - ' + commune.COMMUNE_KH
+                  value: commune.id,
+                  text: commune.name_en + ' - ' + commune.name_kh
                 }));
               });
             }
@@ -429,8 +429,8 @@
             success: function(data) {
               $.each(data, function(index, village) {
                 $('#village_id').append($('<option>', {
-                  value: village.VILLAGE_ID,
-                  text: village.VILLAGE + ' - ' + village.VILLAGE_KH
+                  value: village.id,
+                  text: village.name_en + ' - ' + village.name_kh
                 }));
               });
             }

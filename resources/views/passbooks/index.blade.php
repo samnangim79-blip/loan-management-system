@@ -126,16 +126,16 @@
           @csrf
           <div class="modal-body">
             <div class="mb-3">
-              <label for="ACCT_ID" class="form-label">Account <span class="text-danger">*</span></label>
-              <select class="form-control" id="ACCT_ID" name="ACCT_ID" required>
+              <label for="acct_id" class="form-label">Account <span class="text-danger">*</span></label>
+              <select class="form-control" id="acct_id" name="acct_id" required>
                 <option value="">Select Account...</option>
               </select>
               <div class="form-text">{{ __('common.general.search_for_customer_account') }}</div>
             </div>
 
             <div class="mb-3">
-              <label for="PASSBOOK_NO" class="form-label">Passbook Number <span class="text-danger">*</span></label>
-              <input type="text" class="form-control" id="PASSBOOK_NO" name="PASSBOOK_NO" required
+              <label for="passbook_no" class="form-label">Passbook Number <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="passbook_no" name="passbook_no" required
                 placeholder="{{ __('common.form.enter_passbook_number') }}">
             </div>
 
@@ -161,7 +161,7 @@
   <script>
     $(document).ready(function() {
       // Initialize Tom Select for account dropdown
-      var accountSelect = new TomSelect('#ACCT_ID', {
+      var accountSelect = new TomSelect('#acct_id', {
         valueField: 'acct_id',
         labelField: 'display',
         searchField: ['acct_no', 'customer_name'],

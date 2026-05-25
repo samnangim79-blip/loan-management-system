@@ -74,15 +74,15 @@
           @csrf
           <div class="">
             <div class="mb-3">
-              <label for="BRANCH_ID" class="form-label">Branch <span class="text-danger">*</span></label>
-              <select class="form-control" id="BRANCH_ID" name="BRANCH_ID" required>
+              <label for="branch_id" class="form-label">Branch <span class="text-danger">*</span></label>
+              <select class="form-control" id="branch_id" name="branch_id" required>
                 <option value="">Select Branch...</option>
               </select>
             </div>
 
             <div class="mb-3">
-              <label for="TRAN_DATE" class="form-label">Transaction Date <span class="text-danger">*</span></label>
-              <input type="date" class="form-control" id="TRAN_DATE" name="TRAN_DATE" required
+              <label for="tran_date" class="form-label">Transaction Date <span class="text-danger">*</span></label>
+              <input type="date" class="form-control" id="tran_date" name="tran_date" required
                 value="{{ date(__('common.form.ymd')) }}">
             </div>
 
@@ -93,14 +93,14 @@
             </div>
 
             <div class="mb-3">
-              <label for="PASS_FROM_NO" class="form-label">Passbook Number From <span class="text-danger">*</span></label>
-              <input type="text" class="form-control" id="PASS_FROM_NO" name="PASS_FROM_NO" required
+              <label for="pass_from_no" class="form-label">Passbook Number From <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="pass_from_no" name="pass_from_no" required
                 placeholder="e.g., PB000001">
             </div>
 
             <div class="mb-3">
-              <label for="PASS_TO_NO" class="form-label">Passbook Number To <span class="text-danger">*</span></label>
-              <input type="text" class="form-control" id="PASS_TO_NO" name="PASS_TO_NO" required
+              <label for="pass_to_no" class="form-label">Passbook Number To <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="pass_to_no" name="pass_to_no" required
                 placeholder="e.g., PB000100">
             </div>
           </div>
@@ -127,7 +127,7 @@
         success: function(response) {
           if (response && response.length > 0) {
             response.forEach(function(branch) {
-              $('#BRANCH_ID').append('<option value="' + branch.BRANCH_ID + '">' + branch.BRANCH_NAME +
+              $('#branch_id').append('<option value="' + branch.branch_id + '">' + branch.branch_name +
                 '</option>');
             });
           }
@@ -172,7 +172,7 @@
           {
             data: null,
             render: function(data, type, row) {
-              if (row.APPROVED_DATE) {
+              if (row.approved_date) {
                 return '<span class="">{{ __('common.general.approved') }}</span>';
               }
               return '<span class="">{{ __('common.general.pending') }}</span>';
@@ -197,7 +197,7 @@
       // New Maintenance button
       $('#newMaintenanceBtn').click(function() {
         $('#maintenanceForm')[0].reset();
-        $('#TRAN_DATE').val(new Date().toISOString().split('T')[0]);
+        $('#tran_date').val(new Date().toISOString().split('T')[0]);
         $('#maintenanceModal').modal('{{ __('common.general.show') }}');
       });
 
@@ -240,13 +240,13 @@
           title: '{{ __('common.pagination.stock_entry_details') }}',
           html: `
             <table class="table table-striped">
-              <tr><th>ID:</th><td>${row.PASS_ID}</td></tr>
+              <tr><th>ID:</th><td>${row.pass_id}</td></tr>
               <tr><th>Branch:</th><td>${row.branch_name}</td></tr>
-              <tr><th>Date:</th><td>${row.TRAN_DATE ? new Date(row.TRAN_DATE).toLocaleDateString() : '-'}</td></tr>
-              <tr><th>Quantity:</th><td>${row.QTY}</td></tr>
-              <tr><th>From:</th><td>${row.PASS_FROM_NO}</td></tr>
-              <tr><th>To:</th><td>${row.PASS_TO_NO}</td></tr>
-              <tr><th>Status:</th><td>${row.APPROVED_DATE ? '<span class="">{{ __('common.general.approved') }}</span>' : '<span class="">{{ __('common.general.pending') }}</span>'}</td></tr>
+              <tr><th>Date:</th><td>${row.tran_date ? new Date(row.tran_date).toLocaleDateString() : '-'}</td></tr>
+              <tr><th>Quantity:</th><td>${row.qty}</td></tr>
+              <tr><th>From:</th><td>${row.pass_from_no}</td></tr>
+              <tr><th>To:</th><td>${row.pass_to_no}</td></tr>
+              <tr><th>Status:</th><td>${row.approved_date ? '<span class="">{{ __('common.general.approved') }}</span>' : '<span class="">{{ __('common.general.pending') }}</span>'}</td></tr>
             </table>
           `,
           showCloseButton: true,

@@ -71,16 +71,16 @@
             </div>
 
             <div class="mb-3">
-              <label for="LAST_PRINTED_PAGE" class="form-label">Last Printed Page <span
+              <label for="last_printed_page" class="form-label">Last Printed Page <span
                   class="text-danger">*</span></label>
-              <input type="number" class="form-control" id="LAST_PRINTED_PAGE" name="LAST_PRINTED_PAGE" required
+              <input type="number" class="form-control" id="last_printed_page" name="last_printed_page" required
                 min="0">
             </div>
 
             <div class="mb-3">
-              <label for="LAST_PRINTED_LINE" class="form-label">Last Printed Line <span
+              <label for="last_printed_line" class="form-label">Last Printed Line <span
                   class="text-danger">*</span></label>
-              <input type="number" class="form-control" id="LAST_PRINTED_LINE" name="LAST_PRINTED_LINE" required
+              <input type="number" class="form-control" id="last_printed_line" name="last_printed_line" required
                 min="0">
             </div>
 
@@ -166,12 +166,12 @@
           title: '{{ __('common.general.passbook_details') }}',
           html: `
             <table class="table table-striped">
-              <tr><th>Passbook ID:</th><td>${row.PASSBOOK_ID}</td></tr>
+              <tr><th>Passbook ID:</th><td>${row.passbook_id}</td></tr>
               <tr><th>Customer:</th><td>${row.customer_name}</td></tr>
               <tr><th>Account:</th><td>${row.account_no}</td></tr>
-              <tr><th>Passbook No:</th><td>${row.PASSBOOK_NO || '-'}</td></tr>
-              <tr><th>Last Printed Page:</th><td>${row.LAST_PRINTED_PAGE || 0}</td></tr>
-              <tr><th>Last Printed Line:</th><td>${row.LAST_PRINTED_LINE || 0}</td></tr>
+              <tr><th>Passbook No:</th><td>${row.passbook_no || '-'}</td></tr>
+              <tr><th>Last Printed Page:</th><td>${row.last_printed_page || 0}</td></tr>
+              <tr><th>Last Printed Line:</th><td>${row.last_printed_line || 0}</td></tr>
             </table>
           `,
           showCloseButton: true,
@@ -184,8 +184,8 @@
         var row = table.row($(this).closest('tr')).data();
 
         $('#printPassbookId').val(row.passbook_id);
-        $('#LAST_PRINTED_PAGE').val(row.last_printed_page || 0);
-        $('#LAST_PRINTED_LINE').val(row.last_printed_line || 0);
+        $('#last_printed_page').val(row.last_printed_page || 0);
+        $('#last_printed_line').val(row.last_printed_line || 0);
         $('#printModal').modal('show');
       });
 
