@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class PurposeLoanSeeder extends Seeder
 {
@@ -13,7 +14,7 @@ class PurposeLoanSeeder extends Seeder
     public function run(): void
     {
         // Disable foreign key checks
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Schema::disableForeignKeyConstraints();
 
         // Clear existing data
         DB::table('purpose_loans')->truncate();
@@ -40,7 +41,7 @@ class PurposeLoanSeeder extends Seeder
         DB::table('purpose_loans')->insert($purposes);
 
         // Re-enable foreign key checks
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        Schema::enableForeignKeyConstraints();
 
         $this->command->info('Purpose loans seeded successfully.');
     }
